@@ -1,6 +1,6 @@
-package carte;
+package inscryption.carte;
 
-public abstract class CarteAnimal extends Carte
+public class CarteAnimal extends Carte
 {
     protected int m_attk;
     protected int m_gouttesDeSang;

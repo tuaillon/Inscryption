@@ -1,4 +1,4 @@
-package carte;
+package inscryption.carte;
 
 public abstract class Carte
 {

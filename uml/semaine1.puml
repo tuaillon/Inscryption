@@ -35,7 +35,35 @@ package carte
         #m_bVolant : Boolean
         +<<create>> CarteAnimal(String nom, Integer pv, Integer attk, Integer gouttes, Integer os, Boolean bVolant)
     }
+
+    class CarteFactory
+    {
+        -<<create>>
+        +{static}creerCarteAnimal(TypeAnimal) : CarteAnimal
+        +{static}creerCarteObstacle(TypeObstacle) : CarteObstacle
+    }
+
+    enum TypeAnimal
+    {
+        GRIZZLY,
+        MOINEAU,
+        ...
+    }
+
+    enum TypeObstacle
+    {
+        ROCHER,
+        SAPIN
+    }
+
 }
+
+CarteFactory --|> TypeAnimal : <<uses>>
+CarteFactory --|> TypeObstacle : <<uses>>
+CarteFactory --|> CarteAnimal : <<uses>>
+CarteFactory --|> CarteObstacle : <<uses>>
+
+
 
 CarteAnimal --|> Carte : <<extends>>
 CarteObstacle --|> Carte : <<extends>>
