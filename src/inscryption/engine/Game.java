@@ -16,6 +16,12 @@ public final class Game
 
         joueur.afficherMain();
 
+        System.out.println("Actions possibles : ");
+        System.out.println("[fin] Terminer votre tour");
+        System.out.println("[piocher] Piocher une carte");
+        System.out.println("[placer] <numero carte> <position> Placer " +
+                "une carte sur la plateau");
+
     };
 
 }
