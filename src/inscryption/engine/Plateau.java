@@ -1,19 +1,19 @@
 package inscryption.engine;
 
-import inscryption.carte.Carte;
-import inscryption.carte.CarteAnimal;
+import inscryption.carte.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.Map.entry;
 
 public class Plateau
 {
     private final int NB_CARTES_PAR_LIGNE = 4;
+    private final int NB_MAX_OBSTACLE = 2;
 
-    private Map<Position, Optional<Carte>> m_plateau = Map.ofEntries(
+    private final int NB_CASES_PLATEAU = 8;
+
+    private Map<Position, Optional<Carte>> m_plateau = new HashMap<>(Map.ofEntries(
         entry(Position.A1, Optional.empty()),
         entry(Position.A2, Optional.empty()),
         entry(Position.A3, Optional.empty()),
@@ -21,10 +21,36 @@ public class Plateau
         entry(Position.B1, Optional.empty()),
         entry(Position.B2, Optional.empty()),
         entry(Position.B3, Optional.empty()),
-        entry(Position.B4, Optional.empty()));
+        entry(Position.B4, Optional.empty())));
 
-     public Plateau() {}
+    public Plateau()
+    {
+        int nbObstacles = new Random().nextInt(0, NB_MAX_OBSTACLE + 1);
+        List<Position> taken = new ArrayList<Position>();
 
+        for ( int i = 0; i < nbObstacles; i++ )
+        {
+            CarteObstacle carte = CarteFactory.creerCarteObstacleRandom();
+
+            Position[] positions = Position.values();
+
+            int index = new Random().nextInt(positions.length);
+            Position pos = positions[index];
+            while ( taken.contains(pos) )
+            {
+                index = new Random().nextInt(positions.length);
+                pos = positions[index];
+            }
+            taken.add(pos);
+            positionnerCarte(carte,pos);
+
+        }
+    }
+
+    public void positionnerCarte(Carte carte, Position pos)
+    {
+        m_plateau.put(pos, Optional.of(carte));
+    }
 
     public void afficherPlateau()
     {
