@@ -134,4 +134,14 @@ public class CarteFactory
 
         return creerCarteAnimal(typeAleatoire);
     }
+
+    public static CarteObstacle creerCarteObstacleRandom()
+    {
+        TypeObstacle[] types = TypeObstacle.values();
+        Random random = new Random();
+
+        TypeObstacle typeAleatoire = types[random.nextInt(types.length)];
+
+        return creerCarteObstacle(typeAleatoire);
+    }
 }
