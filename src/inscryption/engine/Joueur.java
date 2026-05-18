@@ -23,6 +23,11 @@ public class Joueur
         }
     }
 
+    public void piocherCarte()
+    {
+        m_main.add(m_pioche.piocher());
+    }
+
     public void afficherMain()
     {
         System.out.println("Votre main : ");
@@ -33,8 +38,8 @@ public class Joueur
                     " Gouttes de sang: "+m_main.get(i).getGouttesDeSang()+
                     " Os: "+m_main.get(i).getOs());
         }
+        m_pioche.afficherPioche();
     }
-
 
 
 }
