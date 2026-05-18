@@ -14,6 +14,8 @@ public class Joueur
     private Pioche m_pioche = new Pioche();
     private int m_score;
 
+    private int m_nb_espace_nom_carte;
+
     public Joueur()
     {
         m_score = 0;
@@ -28,14 +30,24 @@ public class Joueur
         System.out.println("Votre main : ");
         for ( int i = 0; i < m_main.size(); i++ )
         {
-            System.out.println(i+1+ ". "+m_main.get(i).getNom() + " PV: "+
-                    m_main.get(i).getPv()+ " Att: "+m_main.get(i).getAtt()+
-                    " Gouttes de sang: "+m_main.get(i).getGouttesDeSang()+
-                    " Os: "+m_main.get(i).getOs());
+            System.out.println(i+1+ ". "+m_main.get(i).getNom() + nbEspacesMots(m_main.get(i)) + "  PV: "+
+                    m_main.get(i).getPv()+ "    Att: "+m_main.get(i).getAtt()+
+                    "   Gouttes de sang: "+m_main.get(i).getGouttesDeSang()+
+                    "   Os: "+m_main.get(i).getOs());
         }
         m_pioche.afficherPioche();
     }
 
+    public String nbEspacesMots(CarteAnimal carte)
+    {
+        int nbEspace = carte.getNbMaxCaractere() - carte.getNbLettres();
+        String res = "";
+        for (int i = 0; i < nbEspace; i++)
+        {
+            res += " ";
+        }
 
+        return res;
+    }
 
 }
