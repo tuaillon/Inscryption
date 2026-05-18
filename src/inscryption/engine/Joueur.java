@@ -33,6 +33,7 @@ public class Joueur
                     " Gouttes de sang: "+m_main.get(i).getGouttesDeSang()+
                     " Os: "+m_main.get(i).getOs());
         }
+        m_pioche.afficherPioche();
     }
 
 
