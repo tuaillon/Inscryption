@@ -33,7 +33,7 @@ public class Pioche
         // Ajouter le nombre de cartes restantes à la pioche
         int nbCarteAPiocher = NB_MAX_CARTES - nbCartesEcureuil;
 
-        // Générer le reste de
+        // Générer le reste de la pioche
         for (int i = 0; i < nbCarteAPiocher; i++)
         {
             m_pioche.push(CarteFactory.creerCarteAnimalRandom());
@@ -53,18 +53,45 @@ public class Pioche
         return m_pioche.size();
     }
 
-    public void regenererPiocheAleatoire() throws Exception
+    public void regenererPiocheAleatoire()
     {
-        if (m_pioche.isEmpty()){
-            throw new Exception("La pile n'est pas vide, vous pouvez encore jouer avant de la regénérer...");
+        viderPioche();
+        for (int i = 0; i < NB_MAX_CARTES; i++)
+        {
+            m_pioche.push(CarteFactory.creerCarteAnimalRandom());
         }
-        else{
-            // Génére une pioche entièrement aléatoire
-            for (int i = 0; i < NB_MAX_CARTES; i++)
-            {
-                m_pioche.push(CarteFactory.creerCarteAnimalRandom());
-            }
+    }
+
+    public void regenererPiocheDebutEcureuil() throws Exception
+    {
+        viderPioche();
+        // Générer une pioche constituée majoritairement d'écureuils
+        // Choix d'une plage générée aléatoirement
+        Random rnd = new Random();
+        int range = NB_MAX_ECUREUIL - NB_MIN_ECUREUIL + 1;
+        int nbCartesEcureuil = rnd.nextInt(NB_MIN_ECUREUIL) + range;
+
+        // Ajouter ce nombre choisi aléatoirement à la pioche
+        for (int i = 0; i < nbCartesEcureuil; i++)
+        {
+            m_pioche.push(CarteFactory.creerCarteAnimal(TypeAnimal.ECUREUIL));
         }
+
+        // Ajouter le nombre de cartes restantes à la pioche
+        int nbCarteAPiocher = NB_MAX_CARTES - nbCartesEcureuil;
+
+        // Générer le reste de la pioche
+        for (int i = 0; i < nbCarteAPiocher; i++)
+        {
+            m_pioche.push(CarteFactory.creerCarteAnimalRandom());
+        }
+
+        // Mélanger les cartes
+        Collections.shuffle(m_pioche);
+    }
+
+    public void viderPioche() {
+        m_pioche.clear();
     }
 
     public void afficherPioche()
