@@ -14,8 +14,6 @@ public class Pioche
     private final int NB_MIN_ECUREUIL = 8;
     private final int NB_MAX_ECUREUIL = 11;
 
-    // Nombre de cartes restantes à piocher
-    private int m_nb_cartes_a_piocher;
     private Stack<CarteAnimal> m_pioche = new Stack<CarteAnimal>();
 
     public Pioche()
@@ -33,10 +31,10 @@ public class Pioche
         }
 
         // Ajouter le nombre de cartes restantes à la pioche
-        m_nb_cartes_a_piocher = NB_MAX_CARTES - nbCartesEcureuil;
+        int nbCarteAPiocher = NB_MAX_CARTES - nbCartesEcureuil;
 
         // Générer le reste de
-        for (int i = 0; i < m_nb_cartes_a_piocher; i++)
+        for (int i = 0; i < nbCarteAPiocher; i++)
         {
             m_pioche.push(CarteFactory.creerCarteAnimalRandom());
         }
