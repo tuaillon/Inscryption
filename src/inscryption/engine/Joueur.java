@@ -71,6 +71,10 @@ public class Joueur
         if ( !p.getPlateau().containsKey(pos) )
             throw new Exception("La position n'existe pas !");
 
+        if (p.estEnnemi(pos))
+            return valide;
+
+        // isPresent() = il y a un vrai élément dans le Optional
         if ( p.getPlateau().get(pos).isPresent() )
             return valide;
 
