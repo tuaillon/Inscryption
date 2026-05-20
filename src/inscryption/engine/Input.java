@@ -1,8 +1,12 @@
 package inscryption.engine;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Input
 {
-
+    List<InputsPossibles> INPUTS_POSSIBLES = Arrays.asList(InputsPossibles.values());
     String m_input;
 
     Input(String input)
@@ -16,7 +20,7 @@ public class Input
     }
 
     public boolean tryExecuteInput()
-    {
-        for (  )
+    {   //a implementer
+        return true;
     }
 }
