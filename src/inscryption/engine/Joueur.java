@@ -66,9 +66,42 @@ public class Joueur
 
     public void placerCarte(CarteAnimal c, Plateau p, Position pos) throws Exception
     {
-        if ( peutPlacerCarte(c, p, pos) )
+        // Si la carte peut être placée et qu'aucun sacrifice n'est nécessaire, on la rajoute sans problème
+        if ( peutPlacerCarte(c, p, pos) && c.getGouttesDeSang() == 0 && c.getOs() == 0)
+        {
             p.positionnerCarte(c,pos);
-
+            p.afficherPlateau();
+        }
+        // Sinon si la carte nécessite un sacrfice
+        else if (c.getGouttesDeSang() >= 0)
+        {
+            // Si le joueur a assez de gouttes de sang, il place la carte sans problème
+            if (m_nbGouttesDeSangTotal >= c.getGouttesDeSang())
+            {
+                p.positionnerCarte(c,pos);
+                p.afficherPlateau();
+            }
+            else
+            {
+                System.out.println("Quelle(s) carte(s) voulez-vous sacrifier ?\n");
+                p.afficherPlateau();
+            }
+        }
+        else if (c.getOs() >= 0)
+        {
+            // Si le joueur a assez d'os, il place la carte sans problème
+            if (m_nbOsTotal >= c.getOs())
+            {
+                p.positionnerCarte(c,pos);
+                p.afficherPlateau();
+            }
+            // Sinon, on dit au joueur qu'il ne peut pas placer la carte
+            else
+            {
+                System.out.println("Vous avez besoin de " + (c.getOs() - m_nbOsTotal) + " os pour placer cette carte...\n");
+                p.afficherPlateau();
+            }
+        }
     }
 
     private boolean peutPlacerCarte(CarteAnimal c, Plateau p, Position pos) throws Exception
