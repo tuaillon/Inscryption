@@ -4,8 +4,7 @@ import inscryption.carte.Carte;
 import inscryption.carte.CarteAnimal;
 import inscryption.carte.CarteFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Joueur
 {
@@ -70,7 +69,7 @@ public class Joueur
         if ( peutPlacerCarte(c, p, pos) && c.getGouttesDeSang() == 0 && c.getOs() == 0)
         {
             p.positionnerCarte(c,pos);
-            p.afficherPlateau();
+            afficherTour(p);
         }
         // Sinon si la carte nécessite un sacrfice
         else if (c.getGouttesDeSang() >= 0)
@@ -79,12 +78,26 @@ public class Joueur
             if (m_nbGouttesDeSangTotal >= c.getGouttesDeSang())
             {
                 p.positionnerCarte(c,pos);
-                p.afficherPlateau();
+                afficherTour(p);
             }
             else
             {
                 System.out.println("Quelle(s) carte(s) voulez-vous sacrifier ?\n");
                 p.afficherPlateau();
+                int i = 0;
+                // Parcours des positions du tableau
+                for (Map.Entry<Position, Optional<Carte>> entry : p.getPlateau().entrySet())
+                {
+                    // on ne veut parcourir que les cases sur lesquelles le joueur peut poser des cartes
+                    if (entry.getKey().name().startsWith("B"))
+                    {
+                        if (entry.getValue().isPresent())
+                        {
+
+                        }
+                    }
+                }
+
             }
         }
         else if (c.getOs() >= 0)
@@ -93,13 +106,13 @@ public class Joueur
             if (m_nbOsTotal >= c.getOs())
             {
                 p.positionnerCarte(c,pos);
-                p.afficherPlateau();
+                afficherTour(p);
             }
             // Sinon, on dit au joueur qu'il ne peut pas placer la carte
             else
             {
                 System.out.println("Vous avez besoin de " + (c.getOs() - m_nbOsTotal) + " os pour placer cette carte...\n");
-                p.afficherPlateau();
+                afficherTour(p);
             }
         }
     }
@@ -122,7 +135,7 @@ public class Joueur
         return valide;
     }
 
-    private void Sacrifier(Plateau p, Position pos) throws Exception {
+    public void Sacrifier(Plateau p, Position pos) throws Exception {
         if ( !p.getPlateau().containsKey(pos) )
         {
             throw new Exception("Il n'y a rien à sacrifier !");
@@ -133,6 +146,12 @@ public class Joueur
 
 
 
+    }
+
+    public void afficherTour(Plateau p)
+    {
+        p.afficherPlateau();
+        afficherMain();
     }
 
 }
