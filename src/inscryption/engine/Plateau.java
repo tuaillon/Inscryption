@@ -115,4 +115,11 @@ public class Plateau
         System.out.println();
     }
 
+    public boolean estEnnemi(Position pos)
+    {
+        if (pos.name().startsWith("A"))
+            return true;
+        return false;
+    }
+
 }
