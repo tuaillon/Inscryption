@@ -14,6 +14,8 @@ public abstract class Carte
         m_pv = pv;
     }
 
+    public boolean estMort() { return m_pv <= 0; }
+
     public String getNom()
     {
         return m_nom;
@@ -23,6 +25,8 @@ public abstract class Carte
     {
         return m_pv;
     }
+
+    protected void impacterPv(int valeur) { m_pv -= valeur; }
 
     public abstract String getInfos();
 

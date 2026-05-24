@@ -1,5 +1,8 @@
 package inscryption.carte;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 public class CarteAnimal extends Carte
 {
     protected int m_attk;
@@ -16,6 +19,26 @@ public class CarteAnimal extends Carte
         m_bVolant = volant;
 
     }
+
+    //prends direct un optional comme on peut appliquer la methode pour toutes les cartes
+    //enface et pas besoin de faire des checks dans game pour voir si cest present ou pas
+    //renvoie le nombre de points a modifier dans le score
+    public int attaquer(Optional<Carte> carteAdverse)
+    {
+        if ( carteAdverse.isPresent() )
+        {
+            if ( this.m_bVolant ) // cas du volant
+                return this.m_attk;
+
+            carteAdverse.get().impacterPv(this.m_attk);
+            return 0; //pas de score
+
+        }
+        //cas où y a pas de carte en face
+        return this.m_attk;
+    }
+
+    public void modifierPv(int valeur) { m_pv = valeur; }
 
     public int getOs()
     {

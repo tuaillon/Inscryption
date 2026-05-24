@@ -12,6 +12,9 @@ public class Plateau
     private final int NB_MAX_OBSTACLE = 2;
 
     private final int NB_CASES_PLATEAU = 8;
+    private final int NB_CASES_DE_JEU = 4;
+
+    public int getNB_CASES_DE_JEU() { return NB_CASES_DE_JEU; }
 
     private Map<Position, Optional<Carte>> m_plateau = new HashMap<>(Map.ofEntries(
         entry(Position.A1, Optional.empty()),

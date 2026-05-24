@@ -12,10 +12,9 @@ public class Adversaire {
     private Pioche m_pioche = new Pioche();
     private int m_score;
 
-    public Adversaire()
-    {
-        m_score = 0;
-    }
+    public Adversaire() { m_score = 0; }
+
+    public int getScore() { return m_score; }
 
     private boolean peutPlacerCarte(CarteAnimal c, Plateau p, Position pos) throws Exception
     {
@@ -29,5 +28,10 @@ public class Adversaire {
         valide = true;
 
         return valide;
+    }
+
+    public void afficherProchain(Plateau p)
+    {
+
     }
 }

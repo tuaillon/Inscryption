@@ -21,6 +21,8 @@ public class Joueur
     public static final List<String> ACTIONS_POSSIBLES = List.of("placer",
             "fin","piocher");
 
+    public int getScore() { return m_score; }
+
     public Joueur()
     {
         m_score = 0;
@@ -103,9 +105,7 @@ public class Joueur
                 }
                 // Affichage final des cartes que l'on peut sacrifier
                 System.out.println(texteInfosCartes + "\n Indiquez votre choix : \n" + texteActionsPossibles);
-
-
-
+                
             }
         }
         else if (c.getOs() >= 0)
@@ -161,5 +161,7 @@ public class Joueur
         p.afficherPlateau();
         afficherMain();
     }
+
+    public void mettreAJourOs(int valeur) { m_nbOsTotal++; }
 
 }
