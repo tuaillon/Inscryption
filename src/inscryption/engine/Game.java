@@ -7,7 +7,8 @@ import java.util.Scanner;
 
 public final class Game
 {
-    private final int NB_DE_PARTIES_POUR_GAGNER = 3;
+    private final int NB_DE_PARTIES = 3;
+    private final int NB_DE_PARTIES_POUR_GAGNER = 2;
     private final int NB_DE_POINTS_POUR_GAGNER_PARTIE = 5;
     Joueur m_joueur = new Joueur();
     Adversaire m_adversaire = new Adversaire();
@@ -17,10 +18,10 @@ public final class Game
 
     public Game() {};
 
-    public void lancerJeu() {
+    public void lancerJeu() throws Exception {
         boolean gameRunning = true;
 
-        for ( int partie = 1; partie <= NB_DE_PARTIES_POUR_GAGNER; partie++ )
+        for ( int partie = 1; partie <= NB_DE_PARTIES; partie++ )
 
             while ( m_joueur.getScore() - m_adversaire.getScore() <= NB_DE_POINTS_POUR_GAGNER_PARTIE )
             {
@@ -36,7 +37,7 @@ public final class Game
 
                 Scanner sc = new Scanner(System.in);
                 Input input = new Input(sc.nextLine());
-                while ( !input.tryExecuteInput() )
+                while ( !input.tryExecuteInput(m_joueur, m_plateau) )
                 {
                     input.changerInput(sc.nextLine());
                 }

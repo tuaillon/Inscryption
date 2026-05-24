@@ -32,6 +32,10 @@ public class Joueur extends Entite
         m_nbOsTotal = 0;
     }
 
+    public CarteAnimal getCarteMain(int index) { return m_main.get(index); }
+
+    public void retirerCarteMain(int index) { m_main.remove(index); }
+
     public void afficherMain()
     {
         System.out.println("\nVotre main : ");
@@ -69,6 +73,9 @@ public class Joueur extends Entite
             p.positionnerCarte(c,pos);
             afficherTour(p);
         }
+        if (!peutPlacerCarte(c, p, pos))
+            return; // eviter le placement dans le champ ennemi
+
         // Sinon si la carte nécessite un sacrfice
         else if (c.getGouttesDeSang() >= 0)
         {
