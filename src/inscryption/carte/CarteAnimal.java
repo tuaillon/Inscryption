@@ -23,6 +23,7 @@ public class CarteAnimal extends Carte
     //prends direct un optional comme on peut appliquer la methode pour toutes les cartes
     //enface et pas besoin de faire des checks dans game pour voir si cest present ou pas
     //renvoie le nombre de points a modifier dans le score
+    @Override
     public int attaquer(Optional<Carte> carteAdverse)
     {
         if ( carteAdverse.isPresent() )

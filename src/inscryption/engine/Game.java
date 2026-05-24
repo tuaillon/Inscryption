@@ -48,12 +48,26 @@ public final class Game
 
     public void mettreAjourEtat()
     {
-        for ( int i = 0; i < m_plateau.getNB_CASES_DE_JEU(); i++ )
+        Position[] ligneAdversaire = {Position.A1, Position.A2, Position.A3, Position.A4};
+        Position[] ligneJoueur = {Position.B1, Position.B2, Position.B3, Position.B4};
+        int pointsJoueur = 0;
+        int pointsAdversaire = 0;
+
+        for ( int i = 0; i < ligneJoueur.length; i++ )
         {
-            //pour la case joueur on fait case + NBCASESPARJOUEUR pour avoir la carte enface
-            int indexCarteEnnemie = i+ m_plateau.getNB_CASES_DE_JEU();
-            m_plateau.getPlateau().get(indexCarteEnnemie).get();
+            Optional<Carte> carteJoueur = m_plateau.getPlateau().get(ligneJoueur[i]);
+            Optional<Carte> carteEnnemi = m_plateau.getPlateau().get(ligneAdversaire[i]);
+
+            if ( carteJoueur.isPresent() )
+                pointsJoueur += carteJoueur.get().attaquer(carteEnnemi);
+
+            if ( carteEnnemi.isPresent() )
+                pointsAdversaire += carteEnnemi.get().attaquer(carteJoueur);
         }
+
+        m_joueur.modifierScore(pointsJoueur);
+        m_adversaire.modifierScore(pointsAdversaire);
+        mettreAjourPlateau();
     }
 
     //permet de mettre a jour le plateau apres chaque tour

@@ -1,5 +1,7 @@
 package inscryption.carte;
 
+import java.util.Optional;
+
 public abstract class Carte
 {
     protected String m_nom;
@@ -13,6 +15,8 @@ public abstract class Carte
         m_nom = nom;
         m_pv = pv;
     }
+
+    public abstract int attaquer(Optional<Carte> carteAdverse);
 
     public boolean estMort() { return m_pv <= 0; }
 

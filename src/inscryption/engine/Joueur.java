@@ -6,13 +6,12 @@ import inscryption.carte.CarteFactory;
 
 import java.util.*;
 
-public class Joueur
+public class Joueur extends Entite
 {
     private final int NB_MIN_MAIN = 4;
 
     private List<CarteAnimal> m_main = new ArrayList<CarteAnimal>();
     private Pioche m_pioche = new Pioche();
-    private int m_score;
     private int m_nb_espace_nom_carte;
 
     private int m_nbOsTotal;
@@ -20,8 +19,6 @@ public class Joueur
 
     public static final List<String> ACTIONS_POSSIBLES = List.of("placer",
             "fin","piocher");
-
-    public int getScore() { return m_score; }
 
     public Joueur()
     {
@@ -151,8 +148,6 @@ public class Joueur
 
         m_nbOsTotal++;
         m_nbGouttesDeSangTotal++;
-
-
 
     }
 
