@@ -1,0 +1,236 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+
+package inscryption
+{
+    package engine
+    {
+        class Game <<Final>>
+        {
+            -NB_DE_PARTIES_POUR_GAGNER : Integer
+            -NB_DE_POINTS_POUR_GAGNER_PARTIE : Integer
+            -NB_DE_PARTIES_POUR_GAGNER : Integer
+            m_joueur : Joueur
+            m_adversaire : Adversaire
+            m_plateau : Plateau
+            +<<create>> Game()
+            +lancerJeu() : void
+            +mettreAJourEtat()
+            +mettreAJourPlateau()
+        }
+
+        class Joueur
+        {
+            -m_main : List<CarteAnimal>
+            -m_pioche : Pioche
+            -NB_MIN_MAIN : Integer
+            +<<create>> Joueur()
+            +{static}ACTIONs_POSSIBLES : List<String>
+            +getCarteMain(index : Integer) : CarteAnimal
+            +retirerCarteMain(index : Integer)
+            +afficherMain()
+            +piocher()
+            +placerCarte(c: CarteAnimal, p: Plateau, pos: Position)
+            +peutPlacerCarte(c: CarteAnimal, p: Plateau, pos: Position) : Boolean
+            +Sacrifier(p: Plateau, pos: Position)
+            +afficherInfosTour(p: Plateau)
+            +mettreAJourOs(valeur: Integer)
+            +nbEspaceMots(carte: CarteAnimal) : String
+        }
+
+        class Pioche
+        {
+            -NB_MAX_CARTES : Integer
+            -NB_MIN_ECUREUIL : Integer
+            -NB_MAX_ECUREUIL : Integer
+            -m_pioche : Stack<CarteAnimal>
+            +<<create>> Pioche()
+            +piocher() : CarteAnimal
+            +nbCartePioche() : Integer
+            +regenererPiocheAleatoire()
+            +regenererPiocheDebutEcureuil()
+            +viderPioche()
+            +afficherPioche()
+        }
+
+        class Plateau
+        {
+            -NB_CARTES_PAR_LIGNE : Integer
+            -NB_MAX_OBSTACLE : Integer
+            -NB_CASES_PLATEAU : Integer
+            -NB_CASES_DE_JEU : Integer
+            -m_plateau : Map<Position, Optional<Carte>>
+            +<<create>> Plateau()
+            +getNB_CASES_DE_JEU() : Integer
+            +afficherPlateau() : void
+            +positionnerCarte(p: Position)
+            +retirerCarteA(p: Position)
+            +afficherPlateau()
+            +estEnnemi(pos: Position)
+        }
+
+        class Adversaire
+        {
+            -NB_MIN_MAIN: Integer
+            -m_main : List<CarteAnimal>
+            -m_pioche : Pioche
+            +<<create>> Adversaire
+            +peutPlacerCarte(c: CarteAnimal, p: Plateau, pos: Position) : Boolean
+            +afficherProchain()
+        }
+
+        class Entite
+        {
+            #m_score: Integer
+            #m_nbOsTotal: Integer
+            #m_nbGouttesDeSangTotal: Integer
+
+            +getScore() : Integer
+            +modifierScore(valeur: Integer)
+        }
+
+        class Input
+        {
+            -INPUTS_POSSIBLES: List<InputsPossibles>
+            -m_input : String
+
+            +<<create>> Input(input: String)
+            +changerInput(newInput: String)
+            +tryExecuteInput(j: Joueur, p: Plateau) : Boolean
+        }
+
+        class Renderer
+        {
+            +{static}afficherInfosTour(p: Plateau) : String
+        }
+
+        enum InputsPossibles
+        {
+            PLACER,
+            FIN,
+            PIOCHER
+        }
+
+        enum Position
+        {
+            A1,
+            A2,
+            A3,
+            A4,
+            B1,
+            B2,
+            B3,
+            B4
+        }
+    }
+
+    package carte
+    {
+        class Carte
+        {
+            #m_nom : String
+            #m_pv : Integer
+            #NB_MAX_CARACTERE : Integer
+            +<<create>> Carte()
+            +<<create>> Carte(String nom, Integer pv)
+            +{abstract}attaquer(carteAdverse: Optional<Carte>) : Integer
+            +estMort() : Boolean
+            +getNom() : String
+            +getPv() : Integer
+            #impacterPV(valeur: Integer)
+            +getInfos() : String
+            +getToutesInfosCartes() : String
+            +getNbLettres() : Integer
+            +getNbMaxCaractere() : Integer
+            +nbEspaceMots(carte: Carte) : String
+        }
+
+        class CarteObstacle
+        {
+           +<<create>> CarteObstacle(String nom, Integer pv)
+           +attaquer(carteAdverse: Optional<Carte>) : Integer
+           +getInfos() : String
+           +getToutesInfosCartes() : String
+        }
+
+        class CarteAnimal
+        {
+            #m_attaque : Integer
+            #m_gouttesDeSang : Integer
+            #m_os : Integer
+            #m_bVolant : Boolean
+            +<<create>> CarteAnimal(String nom, Integer pv, Integer attk, Integer gouttes, Integer os, Boolean bVolant)
+            +attaquer(carteAdverse: Optional<Carte>) : Integer
+            +modifierPv(valeur : Integer)
+            +getOs() : Integer
+            +getGouttesDeSang() : Integer
+            +getAtt() : Integer
+            +getInfos() : String
+            +getToutesInfosCartes() : String
+        }
+
+        class CarteFactory
+        {
+            -<<create>>
+            +{static}creerCarteAnimal(TypeAnimal) : CarteAnimal
+            +{static}creerCarteObstacle(TypeObstacle) : CarteObstacle
+            +{static}creerCarteAnimalRandom() : CarteAnimal
+            +{static}creerCarteObstacleRandom() : CarteObstacle
+        }
+
+        enum TypeAnimal
+        {
+            CHAT,
+            GRIZZLY,
+            COYOTE,
+            MOINEAU,
+            CORBEAU,
+            ECUREUIL,
+            HERMINE,
+            LOUVETEAU,
+            LOUP,
+            PUNAISE
+        }
+
+        enum TypeObstacle
+        {
+            ROCHER,
+            SAPIN
+        }
+
+    }
+
+}
+
+
+class Main
+{
+    +main(String[]) : void
+}
+
+CarteFactory --|> TypeAnimal : <<uses>>
+CarteFactory --|> TypeObstacle : <<uses>>
+CarteFactory --|> CarteAnimal : <<uses>>
+CarteFactory --|> CarteObstacle : <<uses>>
+
+CarteAnimal --|> Carte : <<extends>>
+CarteObstacle --|> Carte : <<extends>>
+
+
+Joueur --|> Entite : <<extends>>
+Adversaire --|> Entite : <<extends>>
+Game --> Joueur : <<uses>>
+Game --> Plateau : <<uses>>
+Game --> Input : <<uses>>
+Input --> InputsPossibles : <<uses>>
+Joueur --> CarteAnimal : <<has>>
+Joueur --> Pioche : <<has>>
+Plateau --> Carte : <<has>>
+Plateau --|> Position : <<uses>>
+Main --> Game : <<uses>>
+
+@enduml
