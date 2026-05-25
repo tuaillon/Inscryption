@@ -14,8 +14,8 @@ public class CarteFactory
             case CHAT:
                 return new CarteAnimal(
                         "Chat",
-                        0,
                         1,
+                        0,
                         1,
                         0,
                         false);
@@ -59,7 +59,7 @@ public class CarteFactory
             case ECUREUIL:
                 return new CarteAnimal(
                         "Ecureuil",
-                        0,
+                        1,
                         1,
                         0,
                         0,

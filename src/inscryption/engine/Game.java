@@ -18,8 +18,10 @@ public final class Game
 
     public Game() {};
 
-    public void lancerJeu() throws Exception {
+    public void lancerJeu() throws Exception
+    {
         boolean gameRunning = true;
+        int partiesGagnees = 0;
 
         for ( int partie = 1; partie <= NB_DE_PARTIES; partie++ )
 
@@ -45,7 +47,11 @@ public final class Game
                 mettreAjourEtat();
 
             }
-        }
+        if ( partiesGagnees >= NB_DE_PARTIES_POUR_GAGNER )
+            System.out.println("Vous avez gagné !");
+        else
+            System.out.println("La victoire n'est pas pour tout le monde !");
+    }
 
     public void mettreAjourEtat()
     {

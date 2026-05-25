@@ -14,9 +14,6 @@ public class Joueur extends Entite
     private Pioche m_pioche = new Pioche();
     private int m_nb_espace_nom_carte;
 
-    private int m_nbOsTotal;
-    private int m_nbGouttesDeSangTotal;
-
     public static final List<String> ACTIONS_POSSIBLES = List.of("placer",
             "fin","piocher");
 
@@ -67,17 +64,21 @@ public class Joueur extends Entite
 
     public void placerCarte(CarteAnimal c, Plateau p, Position pos) throws Exception
     {
+        if ( !peutPlacerCarte(c, p, pos) )
+        {
+            System.out.println("Emplacement invalide ! ");
+            return; // eviter le placement dans le champ ennemi
+        }
         // Si la carte peut être placée et qu'aucun sacrifice n'est nécessaire, on la rajoute sans problème
-        if ( peutPlacerCarte(c, p, pos) && c.getGouttesDeSang() == 0 && c.getOs() == 0)
+        if ( c.getGouttesDeSang() == 0 && c.getOs() == 0)
         {
             p.positionnerCarte(c,pos);
             afficherTour(p);
+            return;
         }
-        if (!peutPlacerCarte(c, p, pos))
-            return; // eviter le placement dans le champ ennemi
 
         // Sinon si la carte nécessite un sacrfice
-        else if (c.getGouttesDeSang() >= 0)
+        if (c.getGouttesDeSang() > 0)
         {
             // Si le joueur a assez de gouttes de sang, il place la carte sans problème
             if (m_nbGouttesDeSangTotal >= c.getGouttesDeSang())
