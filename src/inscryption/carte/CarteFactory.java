@@ -18,7 +18,8 @@ public class CarteFactory
                         0,
                         1,
                         0,
-                        false);
+                        false,
+                        TypePouvoir.NOMBREUSES_VIES);
 
             case GRIZZLY:
                 return new CarteAnimal(
@@ -81,7 +82,8 @@ public class CarteFactory
                         1,
                         1,
                         0,
-                        false);
+                        false,
+                        TypePouvoir.CROISSANCE);
 
             case LOUP:
                 return new CarteAnimal(
@@ -99,7 +101,8 @@ public class CarteFactory
                         1,
                         0,
                         2,
-                        false);
+                        false,
+                        TypePouvoir.PUANT);
 
             case ELAN:
                 return new CarteAnimal(
@@ -108,7 +111,8 @@ public class CarteFactory
                         2,
                         2,
                         0,
-                        false);
+                        false,
+                        TypePouvoir.COUREUR);
 
             case VIPERE:
                 return new CarteAnimal(
@@ -117,7 +121,8 @@ public class CarteFactory
                         1,
                         2,
                         0,
-                        false);
+                        false,
+                        TypePouvoir.CONTACT_MORTEL);
 
             case PORC_EPIC:
                 return new CarteAnimal(
@@ -126,7 +131,8 @@ public class CarteFactory
                         1,
                         1,
                         0,
-                        false);
+                        false,
+                        TypePouvoir.PIQUES_POINTUES);
             default:
                 return null; //jamais on arrivera ici
 

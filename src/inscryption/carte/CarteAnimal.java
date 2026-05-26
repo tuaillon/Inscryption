@@ -9,7 +9,6 @@ public class CarteAnimal extends Carte
     private int m_gouttesDeSang;
     private int m_os;
     private boolean m_bVolant;
-    //private Optional<Pouvoir> m_pouvoir;
 
     public CarteAnimal(String nom, int pv, int attaque, int gouttes,
                        int os, boolean volant) {
@@ -18,12 +17,25 @@ public class CarteAnimal extends Carte
         m_gouttesDeSang = gouttes;
         m_os = os;
         m_bVolant = volant;
+        m_pouvoir = Optional.empty(); //pas de pvr par défaut
+
+    }
+    //autre constr avec pouvoir si la carte en a un
+    public CarteAnimal(String nom, int pv, int attaque, int gouttes,
+                       int os, boolean volant, TypePouvoir pouv) {
+        super(nom, pv);
+        m_attk = attaque;
+        m_gouttesDeSang = gouttes;
+        m_os = os;
+        m_bVolant = volant;
+        m_pouvoir = Optional.of(pouv);
 
     }
 
-    //prends direct un optional comme on peut appliquer la methode pour toutes les cartes
+    /*prends direct un optional comme on peut appliquer la methode pour toutes les cartes
     //enface et pas besoin de faire des checks dans game pour voir si cest present ou pas
-    //renvoie le nombre de points a modifier dans le score
+    renvoie le nombre de points a modifier dans le score
+    */
     @Override
     public int attaquer(Optional<Carte> carteAdverse)
     {
