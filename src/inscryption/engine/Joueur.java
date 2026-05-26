@@ -12,7 +12,6 @@ public class Joueur extends Entite
 
     private List<CarteAnimal> m_main = new ArrayList<CarteAnimal>();
     private Pioche m_pioche = new Pioche();
-    private int m_nb_espace_nom_carte;
 
     public static final List<String> ACTIONS_POSSIBLES = List.of("placer",
             "fin","piocher");
@@ -43,18 +42,6 @@ public class Joueur extends Entite
 
         }
         m_pioche.afficherPioche();
-    }
-
-    public String nbEspacesMots(Carte carte)
-    {
-        int nbEspace = carte.getNbMaxCaractere() - carte.getNbLettres();
-        String res = "";
-        for (int i = 0; i < nbEspace; i++)
-        {
-            res += " ";
-        }
-
-        return res;
     }
 
     public void piocher()
