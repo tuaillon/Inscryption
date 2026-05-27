@@ -161,6 +161,7 @@ public class Joueur extends Entite
                     {
                         // Augmente le nombre de gouttes de sang
                         m_nbGouttesDeSangTotal++;
+                        m_nbOsTotal++;
                         // Enlève la carte dans la liste à sacrifier
                         int emplacement = Integer.parseInt(choix) - 1;
                         p.retirerCarteA(listesPositionCartesSacrifiables.get(emplacement));
