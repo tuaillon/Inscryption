@@ -53,6 +53,7 @@ public class Joueur extends Entite
 
     public void placerCarte(CarteAnimal c, Plateau p, Position pos) throws Exception
     {
+        System.out.println("gouttes : " + m_nbGouttesDeSangTotal);
         if ( !peutPlacerCarte(c, p, pos) )
         {
             System.out.println("Emplacement invalide ! ");
@@ -77,31 +78,8 @@ public class Joueur extends Entite
                 afficherTour(p);
                 retirerCarteMain(c);
             }
-            else
-            {
-                System.out.println("Quelle(s) carte(s) voulez-vous sacrifier ?\n");
-                p.afficherPlateau();
-                int nbCartes = 1;
-                String texteInfosCartes = "\n";
-                String texteActionsPossibles = "";
-                // Parcours des positions du tableau
-                for (Map.Entry<Position, Optional<Carte>> entry : p.getPlateau().entrySet())
-                {
-                    // on ne veut parcourir que les cases sur lesquelles le joueur peut poser des cartes
-                    if (entry.getKey().name().startsWith("B"))
-                    {
-                        // Si elles existent, on les affiche
-                        if (entry.getValue().isPresent())
-                        {
-                            // mise en forme de l'affichage
-                            texteInfosCartes += nbCartes + ". " + entry.getValue().get().getToutesInfosCarte() + "\n";
-                            texteActionsPossibles += "[" + nbCartes + "]\n";
-                        }
-                    }
-                }
-                // Affichage final des cartes que l'on peut sacrifier
-                System.out.println(texteInfosCartes + "\n Indiquez votre choix : \n" + texteActionsPossibles);
-                
+            else {
+                sacrifier(c, p, pos);
             }
         }
         else if (c.getOs() >= 0)
@@ -122,6 +100,92 @@ public class Joueur extends Entite
         }
     }
 
+    public void sacrifier(CarteAnimal c, Plateau p, Position pos)
+    {
+        // Condition pour continuer d'afficher ce pop up
+        boolean sacrifier = true;
+
+        p.afficherPlateau();
+        int nbCartes = 0;
+
+        List<Carte> listeCartesSacrifiables = new ArrayList<>();
+        List<Position> listesPositionCartesSacrifiables = new ArrayList<>();
+
+        // Parcours des positions du tableau
+        for (Map.Entry<Position, Optional<Carte>> entry : p.getPlateau().entrySet()) {
+            // on ne veut parcourir que les cases sur lesquelles le joueur peut poser des cartes
+            if (entry.getKey().name().startsWith("B")) {
+                // Si elles existent, on les affiche
+
+                if (entry.getValue().isPresent() && entry.getValue().get() instanceof CarteAnimal) { // A AMELIORER
+                    // Ajouter la carte à la liste
+                    listeCartesSacrifiables.add(entry.getValue().get());
+                    // Ajouter la position corrspondante
+                    listesPositionCartesSacrifiables.add(entry.getKey());
+                    nbCartes++;
+                }
+            }
+        }
+        do {
+            String texteInfosCartes = "\n";
+            // Si le joueur n'a aucune carte pouvant être sacrifiée placée sur le plateau, on lui indique et on revient au tour
+            if (nbCartes == 0) {
+                sacrifier = false;
+                System.out.println("\nVous n'avez aucune carte à sacrifier !\n");
+            }
+            // Si le joueur n'a pas assez de cartes à sacrifier, on lui indique et on revient au tour
+            else if (nbCartes + m_nbGouttesDeSangTotal < c.getGouttesDeSang()){
+                sacrifier = false;
+                System.out.println("\nIl vous manque " + (c.getGouttesDeSang()-nbCartes) + " goutte(s) à sacrifier pour placer cette carte !\n");
+            }
+            // Sinon on lui propose les cartes qu'il souhaite sacrifier
+            else {
+                System.out.println("Quelle(s) carte(s) voulez-vous sacrifier ?\n");
+                // Affichage final des cartes que l'on peut sacrifier
+                int j = 1;
+                for(Carte carte : listeCartesSacrifiables){
+                    texteInfosCartes += "[" + j + "] " + carte.getToutesInfosCarte() + "\n";
+                    j++;
+                }
+                System.out.println("Indiquez votre choix : \n" + texteInfosCartes);
+
+                // Scanner
+                Scanner sc = new Scanner(System.in);
+                String choix = sc.nextLine();
+
+
+                // on
+                for(int i = 0; i < listeCartesSacrifiables.size(); i++)
+                {
+                    if ((choix.equals("1")|| choix.equals("2") || choix.equals("3") || choix.equals(("4"))) && Integer.parseInt(choix) <= listeCartesSacrifiables.size())
+                    {
+                        // Augmente le nombre de gouttes de sang
+                        m_nbGouttesDeSangTotal++;
+                        // Enlève la carte dans la liste à sacrifier
+                        int emplacement = Integer.parseInt(choix) - 1;
+                        p.retirerCarteA(listesPositionCartesSacrifiables.get(emplacement));
+
+                        listeCartesSacrifiables.remove(listeCartesSacrifiables.get(emplacement));
+                        listesPositionCartesSacrifiables.remove(listesPositionCartesSacrifiables.get(emplacement));
+                        System.out.println("\n" + listeCartesSacrifiables.size());
+                    }
+                }
+                // On vérifie si les conditions sont remplies pour le sacrifice
+                // Si le nombre de gouttes de sang est suffisant
+
+                if (c.getGouttesDeSang() <= m_nbGouttesDeSangTotal || listeCartesSacrifiables.isEmpty())
+                {
+                    p.changerCarte(pos, c);
+                    retirerCarteMain(c);
+                    sacrifier = false;
+
+                }
+
+            }
+        }
+        while(sacrifier);
+    }
+
     private boolean peutPlacerCarte(CarteAnimal c, Plateau p, Position pos) throws Exception
     {
         boolean valide = false;
@@ -138,17 +202,6 @@ public class Joueur extends Entite
         valide = true;
 
         return valide;
-    }
-
-    public void Sacrifier(Plateau p, Position pos) throws Exception {
-        if ( !p.getPlateau().containsKey(pos) )
-        {
-            throw new Exception("Il n'y a rien à sacrifier !");
-        }
-
-        m_nbOsTotal++;
-        m_nbGouttesDeSangTotal++;
-
     }
 
     public void afficherTour(Plateau p)

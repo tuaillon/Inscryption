@@ -1,5 +1,6 @@
 package inscryption.carte;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ public abstract class Carte
     {
         m_nom = nom;
         m_pv = pv;
+        m_pouvoirs = new ArrayList<TypePouvoir>();
     }
 
     public boolean detientPouvoir(TypePouvoir pv)

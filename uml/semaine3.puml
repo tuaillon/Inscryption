@@ -21,6 +21,7 @@ package inscryption
             +lancerJeu()
             +mettreAJourEtat()
             +mettreAJourPlateau()
+            +executerPouvoirCroissance();
         }
 
         class Joueur
@@ -36,7 +37,7 @@ package inscryption
             +piocher()
             +placerCarte(c: CarteAnimal, p: Plateau, pos: Position)
             +peutPlacerCarte(c: CarteAnimal, p: Plateau, pos: Position) : Boolean
-            +Sacrifier(p: Plateau, pos: Position)
+            +sacrifier(p: Plateau, pos: Position, c: CarteAnimal)
             +afficherInfosTour(p: Plateau)
             +mettreAJourOs(valeur: Integer)
             +nbEspaceMots(carte: CarteAnimal) : String
@@ -134,6 +135,7 @@ package inscryption
         {
             #m_nom : String
             #m_pv : Integer
+            #m_pouvoirs : TypePouvoir[*]
             #NB_MAX_CARACTERE : Integer
             +<<create>> Carte()
             +<<create>> Carte(String nom, Integer pv)
@@ -147,6 +149,7 @@ package inscryption
             +getNbLettres() : Integer
             +getNbMaxCaractere() : Integer
             +nbEspaceMots(carte: Carte) : String
+            +detientPouvoir(pv: TypePouvoir)
         }
 
         class CarteObstacle
@@ -193,13 +196,26 @@ package inscryption
             HERMINE,
             LOUVETEAU,
             LOUP,
-            PUNAISE
+            PUNAISE,
+            ELAN,
+            VIPERE,
+            PORC_EPIC
         }
 
         enum TypeObstacle
         {
             ROCHER,
             SAPIN
+        }
+
+        enum TypePouvoir
+        {
+            NOMBREUSES_VIES,
+            CROISSANCE,
+            PUANT,
+            COUREUR,
+            CONTACT_MORTEL,
+            PIQUES_POINTUES
         }
 
     }
@@ -214,8 +230,10 @@ class Main
 
 CarteFactory .> TypeAnimal : <<uses>>
 CarteFactory .> TypeObstacle : <<uses>>
+CarteFactory .> TypePouvoir : <<uses>>
 CarteFactory .> CarteAnimal : <<uses>>
 CarteFactory .> CarteObstacle : <<uses>>
+Carte .> TypePouvoir : <<uses>>
 
 CarteAnimal --|> Carte : <<extends>>
 CarteObstacle --|> Carte : <<extends>>
