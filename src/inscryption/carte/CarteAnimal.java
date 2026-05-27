@@ -69,6 +69,8 @@ public class CarteAnimal extends Carte
         return m_attk;
     }
 
+    public void changerAtt(int valeur) { m_attk = valeur; }
+
     @Override
     public String getInfos() {
         return "["+m_nom+"] PV: "+m_pv+ " Att: "+m_attk+
@@ -81,6 +83,8 @@ public class CarteAnimal extends Carte
                 m_pv+ "    Att: "+m_attk+
                 "   Gouttes de sang: "+ m_gouttesDeSang+
                 "   Os: "+m_os +
-                (m_bVolant ? "   Volant" : "   Non Volant");
+                (m_bVolant ? "   Volant" : "   Non Volant") +
+                (m_pouvoir.isPresent() ? "  "+m_pouvoir.toString() :
+                        " Aucun pouvoir") ;
     }
 }

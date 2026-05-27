@@ -1,7 +1,11 @@
 package inscryption.engine;
 
 import inscryption.carte.Carte;
+import inscryption.carte.CarteFactory;
+import inscryption.carte.TypeAnimal;
+import inscryption.carte.TypePouvoir;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -22,11 +26,14 @@ public final class Game
     {
         boolean gameRunning = true;
         int partiesGagnees = 0;
+        int tour = 1;
 
-        for ( int partie = 1; partie <= NB_DE_PARTIES; partie++ )
+        for ( int partie = 1; partie <= NB_DE_PARTIES; partie++ ) {
+            while (m_joueur.getScore() - m_adversaire.getScore() <= NB_DE_POINTS_POUR_GAGNER_PARTIE) {
 
-            while ( m_joueur.getScore() - m_adversaire.getScore() <= NB_DE_POINTS_POUR_GAGNER_PARTIE )
-            {
+                if ( tour == 2 ) //execution de croissance
+                    executerPouvoirCroissance();
+
                 m_adversaire.afficherProchain(m_plateau);
                 m_plateau.afficherPlateau();
                 m_joueur.afficherMain();
@@ -39,14 +46,16 @@ public final class Game
 
                 Scanner sc = new Scanner(System.in);
                 Input input = new Input(sc.nextLine());
-                while ( !input.tryExecuteInput(m_joueur, m_plateau) )
-                {
+                while (!input.tryExecuteInput(m_joueur, m_plateau)) {
                     input.changerInput(sc.nextLine());
                 }
 
                 mettreAjourEtat();
+                tour++;
 
             }
+            tour = 1;
+        }
         if ( partiesGagnees >= NB_DE_PARTIES_POUR_GAGNER )
             System.out.println("Vous avez gagné !");
         else
@@ -93,7 +102,19 @@ public final class Game
                         m_joueur.mettreAJourOs(1);
                 }
 
+        }
     }
 
+    public void executerPouvoirCroissance()
+    {
+        for ( Map.Entry<Position, Optional<Carte>> entry :
+                m_plateau.getPlateau().entrySet() )
+        {
+            // si la carte a le pouvoir
+            if ( entry.getValue().isPresent() &&
+            entry.getValue().get().detientPouvoir(TypePouvoir.CROISSANCE))
+                m_plateau.changerCarte(entry.getKey(),
+                        CarteFactory.creerCarteAnimal(TypeAnimal.LOUP));
+        }
     }
 }

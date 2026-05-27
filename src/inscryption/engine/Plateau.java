@@ -55,6 +55,9 @@ public class Plateau
         }
     }
 
+    public void changerCarte(Position pos,Carte carte)
+    { m_plateau.replace(pos, Optional.of(carte)); }
+
     public void positionnerCarte(Carte carte, Position pos)
     {
         m_plateau.put(pos, Optional.of(carte));
