@@ -111,10 +111,12 @@ public final class Game
                 m_plateau.getPlateau().entrySet() )
         {
             // si la carte a le pouvoir
-            if ( entry.getValue().isPresent() &&
-            entry.getValue().get().detientPouvoir(TypePouvoir.CROISSANCE))
-                m_plateau.changerCarte(entry.getKey(),
-                        CarteFactory.creerCarteAnimal(TypeAnimal.LOUP));
+            if ( entry.getValue().isPresent() )
+                if ( entry.getValue().get().detientPouvoir(TypePouvoir.CROISSANCE) )
+                {
+                    m_plateau.changerCarte(entry.getKey(),
+                            CarteFactory.creerCarteAnimal(TypeAnimal.LOUP));
+                }
         }
     }
 }
