@@ -3,6 +3,7 @@ package inscryption.engine;
 import inscryption.carte.Carte;
 import inscryption.carte.CarteAnimal;
 import inscryption.carte.CarteFactory;
+import inscryption.carte.TypePouvoir;
 
 import java.util.*;
 
@@ -117,7 +118,7 @@ public class Joueur extends Entite
             if (entry.getKey().name().startsWith("B")) {
                 // Si elles existent, on les affiche
 
-                if (entry.getValue().isPresent() && entry.getValue().get() instanceof CarteAnimal) { // A AMELIORER
+                if (entry.getValue().isPresent() && entry.getValue().get().estAnimal()) {
                     // Ajouter la carte à la liste
                     listeCartesSacrifiables.add(entry.getValue().get());
                     // Ajouter la position corrspondante
@@ -162,9 +163,14 @@ public class Joueur extends Entite
                         // Augmente le nombre de gouttes de sang
                         m_nbGouttesDeSangTotal++;
                         m_nbOsTotal++;
+
                         // Enlève la carte dans la liste à sacrifier
                         int emplacement = Integer.parseInt(choix) - 1;
-                        p.retirerCarteA(listesPositionCartesSacrifiables.get(emplacement));
+
+                        //on lenleve si il a pas le pouvoir
+                        if ( !listeCartesSacrifiables.get(emplacement).
+                                detientPouvoir(TypePouvoir.NOMBREUSES_VIES) )
+                            p.retirerCarteA(listesPositionCartesSacrifiables.get(emplacement));
 
                         listeCartesSacrifiables.remove(listeCartesSacrifiables.get(emplacement));
                         listesPositionCartesSacrifiables.remove(listesPositionCartesSacrifiables.get(emplacement));

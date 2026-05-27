@@ -40,12 +40,26 @@ public class CarteAnimal extends Carte
     @Override
     public int attaquer(Optional<Carte> carteAdverse)
     {
+
         if ( carteAdverse.isPresent() )
         {
+            if ( carteAdverse.get().detientPouvoir(TypePouvoir.PUANT) )
+                impacterAtt(-1);
+
             if ( this.m_bVolant ) // cas du volant
                 return this.m_attk;
 
             carteAdverse.get().impacterPv(this.m_attk);
+
+            //contact mortel qui one shot
+            if ( detientPouvoir(TypePouvoir.CONTACT_MORTEL) &&
+            carteAdverse.get().estAnimal() )
+                carteAdverse.get().tuer();
+
+            // si la carte de devant se fait attaquer nous aussi
+            if ( carteAdverse.get().detientPouvoir(TypePouvoir.PIQUES_POINTUES) )
+                impacterPv(1);
+
             return 0; //pas de score
 
         }
@@ -70,7 +84,7 @@ public class CarteAnimal extends Carte
         return m_attk;
     }
 
-    public void changerAtt(int valeur) { m_attk = valeur; }
+    public void impacterAtt(int valeur) { m_attk += valeur; }
 
     @Override
     public String getInfos() {
@@ -99,4 +113,7 @@ public class CarteAnimal extends Carte
         }
         return res;
     }
+
+    @Override
+    public boolean estAnimal() { return true; }
 }

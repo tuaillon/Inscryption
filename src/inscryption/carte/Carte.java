@@ -29,6 +29,8 @@ public abstract class Carte
 
     public boolean estMort() { return m_pv <= 0; }
 
+    public void tuer() { m_pv = 0; }
+
     public String getNom()
     {
         return m_nom;
@@ -66,4 +68,8 @@ public abstract class Carte
     {
         return NB_MAX_CARACTERE;
     }
+
+    //pour pas dinstanceof (bancal tout de même)
+    public boolean estAnimal() { return false; }
+    public boolean estObstacle() { return false; }
 }

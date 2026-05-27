@@ -68,6 +68,15 @@ public class Plateau
         m_plateau.put(p,Optional.empty());
     }
 
+    public void deplacerCarte(Position source, Position dest)
+    {
+        if ( m_plateau.get(source).isPresent() )
+        {
+            positionnerCarte(m_plateau.get(source).get(), dest);
+            retirerCarteA(source);
+        }
+    }
+
     public void afficherPlateau()
     {
         Position[] ligneAdversaire = {Position.A1, Position.A2, Position.A3,
@@ -131,6 +140,36 @@ public class Plateau
         if (pos.name().startsWith("A"))
             return true;
         return false;
+    }
+
+    public boolean deplacementDroitePossible(Position pos)
+    {
+        if ( pos == Position.A4 || pos == Position.B4 ) //pas la peine d'y penser
+            return false;
+
+        return m_plateau.get(posADroite(pos)).isEmpty();
+    }
+
+    public boolean deplacementGauchePossible(Position pos)
+    {
+        if ( pos == Position.A1 || pos == Position.B1 ) //pas la peine d'y penser
+            return false;
+
+        return m_plateau.get(posAGauche(pos)).isEmpty();
+    }
+
+    public Position posADroite(Position pos)
+    {
+        String p = pos.name(); //conversion str espiègle
+        int num = Character.getNumericValue(p.charAt(1)) + 1;
+        return Position.valueOf(p.charAt(0) + String.valueOf(num));
+    }
+
+    public Position posAGauche(Position pos)
+    {
+        String p = pos.name();
+        int num = Character.getNumericValue(p.charAt(1)) - 1;
+        return Position.valueOf(p.charAt(0) + String.valueOf(num));
     }
 
 }

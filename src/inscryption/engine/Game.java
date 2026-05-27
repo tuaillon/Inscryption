@@ -84,6 +84,8 @@ public final class Game
         m_joueur.modifierScore(pointsJoueur);
         m_adversaire.modifierScore(pointsAdversaire);
         mettreAjourPlateau();
+
+        executerPouvoirCoureur();
     }
 
     //permet de mettre a jour le plateau apres chaque tour
@@ -107,16 +109,40 @@ public final class Game
 
     public void executerPouvoirCroissance()
     {
-        for ( Map.Entry<Position, Optional<Carte>> entry :
-                m_plateau.getPlateau().entrySet() )
+        for ( Position pos : m_plateau.getPlateau().keySet() )
         {
             // si la carte a le pouvoir
-            if ( entry.getValue().isPresent() )
-                if ( entry.getValue().get().detientPouvoir(TypePouvoir.CROISSANCE) )
+            if ( m_plateau.getPlateau().get(pos).isPresent() )
+                if ( m_plateau.getPlateau().get(pos).get().
+                        detientPouvoir(TypePouvoir.CROISSANCE) )
                 {
-                    m_plateau.changerCarte(entry.getKey(),
+                    m_plateau.changerCarte(pos,
                             CarteFactory.creerCarteAnimal(TypeAnimal.LOUP));
                 }
         }
     }
+
+    public void executerPouvoirCoureur()
+    {
+        for ( Position pos : m_plateau.getPlateau().keySet() )
+        {
+            if ( m_plateau.getPlateau().get(pos).isPresent() )
+            {
+                if ( m_plateau.getPlateau().get(pos).get().
+                        detientPouvoir(TypePouvoir.COUREUR) )
+                {
+                    if (m_plateau.deplacementDroitePossible(pos) )
+                        m_plateau.deplacerCarte(pos,
+                                m_plateau.posADroite(pos));
+
+                    else if (m_plateau.deplacementGauchePossible(pos) )
+                        m_plateau.deplacerCarte(pos,
+                                m_plateau.posAGauche(pos));
+
+                    //sinon ne pas bouger
+                }
+            }
+        }
+    }
+
 }

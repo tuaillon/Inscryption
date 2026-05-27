@@ -23,4 +23,7 @@ public class CarteObstacle extends Carte
     public String getToutesInfosCarte(){
         return m_nom + nbEspacesMots(this) + "  PV : " + m_pv;
     }
+
+    @Override
+    public boolean estObstacle() { return true; }
 }
