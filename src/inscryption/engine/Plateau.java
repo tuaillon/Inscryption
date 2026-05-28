@@ -85,7 +85,7 @@ public class Plateau
         Position[] ligneJoueur = {Position.B1, Position.B2, Position.B3,
                 Position.B4};
 
-        System.out.print("\n\nAdversaire : ");
+        System.out.print("Adversaire : ");
 
         for ( int i = 0; i < NB_CARTES_PAR_LIGNE; i++ )
         {

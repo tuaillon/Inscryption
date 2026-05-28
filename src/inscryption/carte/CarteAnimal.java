@@ -98,15 +98,15 @@ public class CarteAnimal extends Carte
                 m_pv+ "    Att: "+m_attk+
                 "   Gouttes de sang: "+ m_gouttesDeSang+
                 "   Os: "+m_os +
-                (m_bVolant ? "   Volant " : "   Non Volant ") +
+                (m_bVolant ? "   Volant     " : "   Non Volant ") +
                 afficherPouvoirs() ;
     }
 
     private String afficherPouvoirs()
     {
         if ( m_pouvoirs.isEmpty() )
-            return "Aucun Pouvoir";
-        String res = "";
+            return "    Aucun Pouvoir";
+        String res = "    ";
         for ( TypePouvoir pv : m_pouvoirs )
         {
             res += pv.name() + " ";
