@@ -9,22 +9,13 @@ import java.util.*;
 
 public class Joueur extends Entite
 {
-    private List<CarteAnimal> m_main = new ArrayList<CarteAnimal>();
-    private Pioche m_pioche = new Pioche();
-
-    public static final List<String> ACTIONS_POSSIBLES = List.of("placer",
-            "fin","piocher");
-
     public Joueur()
     {
-        m_score = 0;
+        super();
         for ( int i = 0 ; i < NB_MIN_MAIN; i++ )
         {
             piocher();
         }
-
-        m_nbGouttesDeSangTotal = 0;
-        m_nbOsTotal = 0;
     }
 
     public int getNbCarteMain(){ return m_main.size(); }
@@ -214,12 +205,6 @@ public class Joueur extends Entite
         afficherMain();
     }
 
-
     public void mettreAJourOs(int valeur) { m_nbOsTotal++; }
-
-    public void resetStatsJoueur(){
-        m_nbOsTotal = 0;
-        m_nbGouttesDeSangTotal = 0;
-    }
 
 }

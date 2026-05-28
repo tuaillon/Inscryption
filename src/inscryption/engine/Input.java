@@ -43,6 +43,7 @@ public class Input
         {
             case FIN:
                 g.autoriserPioche();
+                g.terminerTour();
                 return true; // on verra plus tard
 
             case PIOCHER:

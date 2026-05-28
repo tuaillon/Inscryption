@@ -17,46 +17,56 @@ public final class Game
     Adversaire m_adversaire = new Adversaire();
     Plateau m_plateau = new Plateau();
     private boolean m_bApioche = false;
+    private boolean m_finTour = false;
 
     public boolean piochePossible() { return !m_bApioche; }
     public void interdirPioche() { m_bApioche = true; }
     public void autoriserPioche() { m_bApioche = false; }
-
-
+    public void terminerTour() { m_finTour = true; }
 
     public Game() {};
 
     public void lancerJeu() throws Exception
     {
-        boolean gameRunning = true;
         int partiesGagnees = 0;
         int tour = 1;
 
         for ( int partie = 1; partie <= NB_DE_PARTIES; partie++ ) {
-            while (m_joueur.getScore() - m_adversaire.getScore() <= NB_DE_POINTS_POUR_GAGNER_PARTIE) {
+
+            while ( m_joueur.getScore() - m_adversaire.getScore() <=
+                    NB_DE_POINTS_POUR_GAGNER_PARTIE ) {
+
                 if ( tour == 2 ) //execution de croissance
                     executerPouvoirCroissance();
 
-                m_adversaire.afficherProchain();
-                m_plateau.afficherPlateau();
-                m_joueur.afficherMain();
-                m_joueur.afficherScore();
+                //tour de l'adversaire
+                m_adversaire.jouerProchain(m_plateau);
 
-                System.out.println("Actions possibles : ");
-                System.out.println("[fin] Terminer votre tour");
-                System.out.println("[piocher] Piocher une carte");
-                System.out.println("[placer] <numero carte> <position> Placer " +
-                        "une carte sur la plateau");
 
-                Scanner sc = new Scanner(System.in);
-                Input input = new Input(sc.nextLine());
-                while (!input.tryExecuteInput(m_joueur, m_plateau, this)) {
-                    System.out.println("Veuillez entrer des informations valides !");
-                    input.changerInput(sc.nextLine());
+                while ( !m_finTour )
+                {
+                    m_adversaire.afficherProchain();
+                    m_plateau.afficherPlateau();
+                    m_joueur.afficherMain();
+                    afficherStats();
+
+                    System.out.println("Actions possibles : ");
+                    System.out.println("[fin] Terminer votre tour");
+                    System.out.println("[piocher] Piocher une carte");
+                    System.out.println("[placer] <numero carte> <position> Placer " +
+                            "une carte sur la plateau");
+
+                    Scanner sc = new Scanner(System.in);
+                    Input input = new Input(sc.nextLine());
+                    while (!input.tryExecuteInput(m_joueur, m_plateau, this)) {
+                        System.out.println("Veuillez entrer des informations valides !");
+                        input.changerInput(sc.nextLine());
+                    }
                 }
 
                 mettreAjourEtat();
                 tour++;
+                m_finTour = false;
 
             }
             tour = 1;
@@ -65,6 +75,14 @@ public final class Game
             System.out.println("Vous avez gagné !");
         else
             System.out.println("La victoire n'est pas pour tout le monde !");
+    }
+
+    public void afficherStats()
+    {
+        System.out.println("Score de l'adversaire : "+m_adversaire.getScore());
+        System.out.println("Votre score : "+ m_joueur.getScore());
+        System.out.println("Cartes sacrifiées : "+ m_joueur.getNbGouttesDeSang());
+        System.out.println("Cartes mortes : "+ m_joueur.getNbOsTotal());
     }
 
     public void mettreAjourEtat()
