@@ -40,6 +40,7 @@ public final class Game
                 m_adversaire.afficherProchain(m_plateau);
                 m_plateau.afficherPlateau();
                 m_joueur.afficherMain();
+                m_joueur.afficherScore();
 
                 System.out.println("Actions possibles : ");
                 System.out.println("[fin] Terminer votre tour");
@@ -50,8 +51,8 @@ public final class Game
                 Scanner sc = new Scanner(System.in);
                 Input input = new Input(sc.nextLine());
                 while (!input.tryExecuteInput(m_joueur, m_plateau, this)) {
-                    input.changerInput(sc.nextLine());
                     System.out.println("Veuillez entrer des informations valides !");
+                    input.changerInput(sc.nextLine());
                 }
 
                 mettreAjourEtat();

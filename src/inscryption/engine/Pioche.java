@@ -96,6 +96,6 @@ public class Pioche
 
     public void afficherPioche()
     {
-        System.out.println("\n\tPioche : " + nbCartePioche() + " cartes");
+        System.out.println("\n\t\t\tPioche : " + nbCartePioche() + " cartes\n");
     }
 }

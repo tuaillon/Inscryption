@@ -56,7 +56,7 @@ public class Input
                     return true;
                 }
                 else {
-                    System.out.println("Vous avez déja pioché !");
+                    System.out.println("Vous avez déja pioché !\nVeuillez entrer une commande valide !");
                     return false;
                 }
 
