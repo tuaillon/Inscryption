@@ -32,8 +32,8 @@ public final class Game
         int tour = 1;
 
         for ( int partie = 1; partie <= NB_DE_PARTIES; partie++ ) {
-
-            while ( m_joueur.getScore() - m_adversaire.getScore() <=
+            System.out.println("Partie : "+partie + " -------------------");
+            while ( Math.abs(m_joueur.getScore() - m_adversaire.getScore()) <=
                     NB_DE_POINTS_POUR_GAGNER_PARTIE ) {
 
                 if ( tour == 2 ) //execution de croissance
@@ -41,7 +41,6 @@ public final class Game
 
                 //tour de l'adversaire
                 m_adversaire.jouerProchain(m_plateau);
-
 
                 while ( !m_finTour )
                 {
@@ -63,12 +62,25 @@ public final class Game
                         input.changerInput(sc.nextLine());
                     }
                 }
+                System.out.println("#-----------------------------");
+                System.out.println("#Attaques");
+                System.out.println("#-----------------------------");
 
-                mettreAjourEtat();
+                executerTourJoueur();
+                mettreAjourPlateau();
+                executerPouvoirCroissance();
+
+                executerTourAdversaire();
+                mettreAjourPlateau();
+                executerPouvoirCroissance();
+
+                System.out.println("#-----------------------------");
+                System.out.println("#Fin Attaques");
+                System.out.println("#-----------------------------");
                 tour++;
                 m_finTour = false;
-
             }
+
             tour = 1;
         }
         if ( partiesGagnees >= NB_DE_PARTIES_POUR_GAGNER )
@@ -85,12 +97,12 @@ public final class Game
         System.out.println("Cartes mortes : "+ m_joueur.getNbOsTotal());
     }
 
-    public void mettreAjourEtat()
+    public void executerTourJoueur()
     {
-        Position[] ligneAdversaire = {Position.A1, Position.A2, Position.A3, Position.A4};
         Position[] ligneJoueur = {Position.B1, Position.B2, Position.B3, Position.B4};
+        Position[] ligneAdversaire = {Position.A1, Position.A2, Position.A3, Position.A4};
+
         int pointsJoueur = 0;
-        int pointsAdversaire = 0;
 
         for ( int i = 0; i < ligneJoueur.length; i++ )
         {
@@ -99,17 +111,28 @@ public final class Game
 
             if ( carteJoueur.isPresent() )
                 pointsJoueur += carteJoueur.get().attaquer(carteEnnemi);
+        }
+        m_joueur.modifierScore(pointsJoueur);
+    }
+
+    public void executerTourAdversaire()
+    {
+        Position[] ligneJoueur = {Position.B1, Position.B2, Position.B3, Position.B4};
+        Position[] ligneAdversaire = {Position.A1, Position.A2, Position.A3, Position.A4};
+
+        int pointsAdversaire = 0;
+
+        for ( int i = 0; i < ligneJoueur.length; i++ )
+        {
+            Optional<Carte> carteJoueur = m_plateau.getPlateau().get(ligneJoueur[i]);
+            Optional<Carte> carteEnnemi = m_plateau.getPlateau().get(ligneAdversaire[i]);
 
             if ( carteEnnemi.isPresent() )
                 pointsAdversaire += carteEnnemi.get().attaquer(carteJoueur);
         }
-
-        m_joueur.modifierScore(pointsJoueur);
         m_adversaire.modifierScore(pointsAdversaire);
-        mettreAjourPlateau();
-
-        executerPouvoirCoureur();
     }
+
 
     //permet de mettre a jour le plateau apres chaque tour
     // comme mettre les optional a empty si la carte est morte

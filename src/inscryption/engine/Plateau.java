@@ -135,6 +135,14 @@ public class Plateau
         System.out.println();
     }
 
+    public boolean placementPossible(Position pos)
+    {
+        if ( m_plateau.get(pos).isPresent() )
+            return false;
+        return true;
+    }
+
+
     public boolean estEnnemi(Position pos)
     {
         if (pos.name().startsWith("A"))
