@@ -46,8 +46,9 @@ public final class Game
 
                 while ( !m_finTour )
                 {
-                    m_adversaire.afficherProchain();
-                    m_plateau.afficherPlateau();
+                    //m_adversaire.afficherProchain();
+                    //m_plateau.afficherPlateau();
+                    m_plateau.afficherPlateauEntier(m_adversaire.getProchaineAction());
                     m_joueur.afficherMain();
                     afficherStats();
 

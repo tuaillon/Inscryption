@@ -33,6 +33,9 @@ public class CarteAnimal extends Carte
 
     }
 
+    public int getAttk() { return m_attk; }
+    public boolean estVolant() { return m_bVolant; }
+
     /*prends direct un optional comme on peut appliquer la methode pour toutes les cartes
     //enface et pas besoin de faire des checks dans game pour voir si cest present ou pas
     renvoie le nombre de points a modifier dans le score

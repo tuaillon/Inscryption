@@ -3,8 +3,6 @@ package inscryption.engine;
 import inscryption.carte.Carte;
 import inscryption.carte.CarteAnimal;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class Adversaire extends Entite
@@ -20,6 +18,8 @@ public class Adversaire extends Entite
             piocher();
 
     }
+
+    public Optional<CarteAnimal>[] getProchaineAction() { return m_prochaineAction; }
 
     public void jouerProchain(Plateau p) {
         Position[] ligneA = {Position.A1, Position.A2,
