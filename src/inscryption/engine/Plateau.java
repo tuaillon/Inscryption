@@ -83,42 +83,6 @@ public class Plateau
             retirerCarteA(source);
         }
     }
-
-    public void afficherPlateau()
-    {
-        Position[] ligneAdversaire = {Position.A1, Position.A2, Position.A3,
-                Position.A4};
-
-        Position[] ligneJoueur = {Position.B1, Position.B2, Position.B3,
-                Position.B4};
-
-        System.out.println("#=========================================");
-        System.out.println("\n\nAdversaire : ");
-
-        for ( int i = 0; i < NB_CARTES_PAR_LIGNE; i++ )
-        {
-            System.out.println("["+ligneAdversaire[i]+"] "+
-                    (m_plateau.get(ligneAdversaire[i]).isPresent() ?
-                            m_plateau.get(ligneAdversaire[i]).get().getToutesInfosCarte() :
-                            "Aucun"));
-        }
-
-        System.out.println();
-        System.out.println("#=========================================");
-        System.out.println("Joueur     : ");
-
-        for ( int i = 0; i < NB_CARTES_PAR_LIGNE; i++ )
-        {
-            System.out.println("["+ligneJoueur[i]+"] "+
-                    (m_plateau.get(ligneJoueur[i]).isPresent() ?
-                            m_plateau.get(ligneJoueur[i]).get().getToutesInfosCarte() :
-                            "Aucun"));
-        }
-
-        System.out.println();
-        System.out.println("#=========================================");
-    }
-
     public void afficherPlateauEntier(Optional<CarteAnimal>[] prochaineAdversaire)
     {
         Position[] posA = {Position.A1, Position.A2, Position.A3, Position.A4};
@@ -133,99 +97,97 @@ public class Plateau
         }
         System.out.println();
 
-        //afficher les coups prochains
-        afficherLigneCarte(prochaineAdversaire,false);
-        System.out.println("               ||              ||              ||              ||");
-        System.out.println("               \\/              \\/              \\/              \\/");
+        //afficher les coups prochains sans la position
+        afficherLigneCarte(prochaineAdversaire,false, false);
+        System.out.println("      ||              ||              ||              ||");
+        System.out.println("      \\/              \\/              \\/              \\/");
 
         //afficher les deux lignes du plateau
-        afficherLigneCarte(ligneA,true);
+        //posAdverse permet de savoir si il faut mettre A ou B devant la position si affichée
+        afficherLigneCarte(ligneA,true, true);
         System.out.println();
-        afficherLigneCarte(ligneB,true);
+        afficherLigneCarte(ligneB,true, false);
 
         System.out.println();
 
 
     }
 
-    public void afficherLigneCarte(Optional<? extends Carte>[] ligne, boolean afficherPosition)
+    public void afficherLigneCarte(Optional<? extends Carte>[] ligne,
+                                   boolean afficherPosition, boolean posAdverse)
     {
-        int longeurTotale = 61;
         int maxCharLigne = 11;
 
         System.out.println("*-----------*   *-----------*   *-----------*   *-----------*");
 
-        String[] ligneCourante = new String[61];
-        int pos = 0;
-        //nom
-        for ( int i = 0 ; i < NB_CARTES_PAR_LIGNE; i++ )
+        String[] ligneCourante = new String[NB_CARTES_PAR_LIGNE];
+
+        for ( int i = 0; i < NB_CARTES_PAR_LIGNE; i++ )
         {
-            if ( ligne[i].isPresent() ) {
+            if ( ligne[i].isPresent() )
+            {
                 String nom = ligne[i].get().getNom();
-                ligneCourante[pos] = "|" + nom.substring(0, Math.min(nom.length(), maxCharLigne)) + " | ";
+                ligneCourante[i] = "|" + paddingLigne(nom, maxCharLigne) + "|   ";
             }
             else
-                ligneCourante[pos] = "|           | ";
-            pos += 14;
+                ligneCourante[i] = "|" + paddingLigne("", maxCharLigne) + "|   ";
         }
-        pos = 0;
         afficherSurUneLigne(ligneCourante);
 
-        for ( int i = 0 ; i < NB_CARTES_PAR_LIGNE; i++ )
+        for ( int i = 0; i < NB_CARTES_PAR_LIGNE; i++ )
         {
             if ( ligne[i].isPresent() )
-                ligneCourante[pos] = "|-----------| ";
+                ligneCourante[i] = "|-----------|   ";
             else
-                ligneCourante[pos] = "|           | ";
-            pos += 14;
+                ligneCourante[i] = "|" + paddingLigne("", maxCharLigne) + "|   ";
         }
-        pos = 0;
         afficherSurUneLigne(ligneCourante);
 
-        for ( int i = 0 ; i < NB_CARTES_PAR_LIGNE; i++ )
+        for ( int i = 0; i < NB_CARTES_PAR_LIGNE; i++ )
         {
             if ( ligne[i].isPresent() )
-                ligneCourante[pos] = "|PV: "+ligne[i].get().getPv()+"| ";
+                ligneCourante[i] = "|" + paddingLigne("PV: " +
+                        ligne[i].get().getPv(), maxCharLigne) + "|   ";
             else
-                ligneCourante[pos] = "|           | ";
-            pos += 14;
+                ligneCourante[i] = "|" + paddingLigne("", maxCharLigne) + "|   ";
         }
-        pos = 0;
         afficherSurUneLigne(ligneCourante);
 
-        for ( int i = 0 ; i < NB_CARTES_PAR_LIGNE; i++ )
+        for ( int i = 0; i < NB_CARTES_PAR_LIGNE; i++ )
         {
             if ( ligne[i].isPresent() && ligne[i].get().estAnimal() )
-                ligneCourante[pos] = "|Att: "+((CarteAnimal)ligne[i].get()).getAttk()+"| ";
+                ligneCourante[i] = "|" + paddingLigne("Att: " +
+                        ((CarteAnimal) ligne[i].get()).getAttk(), maxCharLigne) + "|   ";
             else
-                ligneCourante[pos] = "|           | ";
-            pos += 14;
+                if ( afficherPosition && !ligne[i].isPresent() ) // on affiche pas si obstacle
+                    ligneCourante[i] = "|" + paddingLigne("    "+(posAdverse ?
+                                    "A" : "B")+(i+1),
+                            maxCharLigne) + "|   ";
+                else
+                    ligneCourante[i] = "|" + paddingLigne("", maxCharLigne) + "|   ";
         }
-
-        pos = 0;
         afficherSurUneLigne(ligneCourante);
 
-        for ( int i = 0 ; i < NB_CARTES_PAR_LIGNE; i++ )
+        for ( int i = 0; i < NB_CARTES_PAR_LIGNE; i++ )
         {
             if ( ligne[i].isPresent() && ligne[i].get().estAnimal() )
-                ligneCourante[pos] = "|"+(((CarteAnimal)ligne[i].get()).estVolant() ?
-                        "Volant" : "Non Volant") +"| ";
+            {
+                String txt = ((CarteAnimal) ligne[i].get()).estVolant() ? "Volant" : "Non Volant";
+                ligneCourante[i] = "|" + paddingLigne(txt, maxCharLigne) + "|   ";
+            }
             else
-                ligneCourante[pos] = "|           | ";
-            pos += 14;
+                ligneCourante[i] = "|" + paddingLigne("", maxCharLigne) + "|   ";
         }
-
-        pos = 0;
         afficherSurUneLigne(ligneCourante);
 
-        for ( int i = 0 ; i < NB_CARTES_PAR_LIGNE; i++ )
+        for ( int i = 0; i < NB_CARTES_PAR_LIGNE; i++ )
         {
             if ( ligne[i].isPresent() && ligne[i].get().estAnimal() )
-                ligneCourante[pos] = "|Pouvoir    | ";
+                ligneCourante[i] = "|" + paddingLigne("Pouvoir", maxCharLigne) + "|   ";
             else
-                ligneCourante[pos] = "|           | ";
-            pos += 14;
+                ligneCourante[i] = "|" + paddingLigne("", maxCharLigne) + "|   ";
         }
+        afficherSurUneLigne(ligneCourante);
 
         System.out.println("*-----------*   *-----------*   *-----------*   *-----------*");
     }
@@ -233,10 +195,12 @@ public class Plateau
     private void afficherSurUneLigne(String[] ligne)
     {
         for ( int i = 0; i < ligne.length; i++ )
-        {
             System.out.print(ligne[i]);
-        }
         System.out.println();
+    }
+
+    private String paddingLigne(String s, int n) {
+        return String.format("%-" + n + "s", s);
     }
 
     public boolean placementPossible(Position pos)
