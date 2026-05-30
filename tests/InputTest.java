@@ -1,3 +1,4 @@
+import inscryption.engine.Game;
 import inscryption.engine.Input;
 import inscryption.engine.Joueur;
 import inscryption.engine.Plateau;
@@ -13,7 +14,8 @@ public final class InputTest
         Joueur j = new Joueur();
         Plateau p = new Plateau();
         Input inp = new Input("piocher");
-        assertTrue(inp.tryExecuteInput(j, p));
+        Game g = new Game();
+        assertTrue(inp.tryExecuteInput(j, p,g));
 
     }
 
@@ -22,7 +24,9 @@ public final class InputTest
         Joueur j = new Joueur();
         Plateau p = new Plateau();
         Input inp = new Input("fin");
-        assertTrue(inp.tryExecuteInput(j, p));
+        Game g = new Game();
+
+        assertTrue(inp.tryExecuteInput(j, p,g ));
 
     }
 
@@ -31,7 +35,9 @@ public final class InputTest
         Joueur j = new Joueur();
         Plateau p = new Plateau();
         Input inp = new Input("placer");
-        assertFalse(inp.tryExecuteInput(j, p));
+        Game g = new Game();
+
+        assertFalse(inp.tryExecuteInput(j, p,g));
 
     }
 
@@ -40,7 +46,9 @@ public final class InputTest
         Joueur j = new Joueur();
         Plateau p = new Plateau();
         Input inp = new Input("placer 1 B1");
-        assertTrue(inp.tryExecuteInput(j, p));
+        Game g = new Game();
+
+        assertTrue(inp.tryExecuteInput(j, p,g));
 
     }
 
@@ -49,7 +57,9 @@ public final class InputTest
         Joueur j = new Joueur();
         Plateau p = new Plateau();
         Input inp = new Input("placer 1 A1");
-        assertFalse(inp.tryExecuteInput(j, p));
+        Game g = new Game();
+
+        assertFalse(inp.tryExecuteInput(j, p,g));
 
     }
 
@@ -58,7 +68,9 @@ public final class InputTest
         Joueur j = new Joueur();
         Plateau p = new Plateau();
         Input inp = new Input("fni");
-        assertFalse(inp.tryExecuteInput(j, p));
+        Game g = new Game();
+
+        assertFalse(inp.tryExecuteInput(j, p,g));
 
     }
 
@@ -67,7 +79,9 @@ public final class InputTest
         Joueur j = new Joueur();
         Plateau p = new Plateau();
         Input inp = new Input("place 1 B1");
-        assertFalse(inp.tryExecuteInput(j, p));
+        Game g = new Game();
+
+        assertFalse(inp.tryExecuteInput(j, p,g));
 
     }
 
@@ -76,7 +90,9 @@ public final class InputTest
         Joueur j = new Joueur();
         Plateau p = new Plateau();
         Input inp = new Input("pioche");
-        assertFalse(inp.tryExecuteInput(j, p));
+        Game g = new Game();
+
+        assertFalse(inp.tryExecuteInput(j, p,g));
 
     }
 

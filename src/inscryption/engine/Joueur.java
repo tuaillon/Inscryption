@@ -94,8 +94,6 @@ public class Joueur extends Entite
     {
         // Condition pour continuer d'afficher ce pop up
         boolean sacrifier = true;
-
-        p.afficherPlateau();
         int nbCartes = 0;
 
         List<Carte> listeCartesSacrifiables = new ArrayList<>();
@@ -201,7 +199,6 @@ public class Joueur extends Entite
 
     public void afficherTour(Plateau p)
     {
-        p.afficherPlateau();
         afficherMain();
     }
 

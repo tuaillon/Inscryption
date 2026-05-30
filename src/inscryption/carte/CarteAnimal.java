@@ -33,6 +33,9 @@ public class CarteAnimal extends Carte
 
     }
 
+    public int getAttk() { return m_attk; }
+    public boolean estVolant() { return m_bVolant; }
+
     /*prends direct un optional comme on peut appliquer la methode pour toutes les cartes
     //enface et pas besoin de faire des checks dans game pour voir si cest present ou pas
     renvoie le nombre de points a modifier dans le score
@@ -44,21 +47,43 @@ public class CarteAnimal extends Carte
         if ( carteAdverse.isPresent() )
         {
             if ( carteAdverse.get().detientPouvoir(TypePouvoir.PUANT) )
+            {
                 impacterAtt(-1);
+                System.out.println(this.m_nom + " subit voit son attaque" +
+                        "réduite de 1 à cause du pouvoir PUANT de "+
+                        carteAdverse.get().getNom());
+            }
 
             if ( this.m_bVolant ) // cas du volant
+            {
+                System.out.println(this.m_nom + " attaque directement le score"+
+                        " de "+m_attk+ " !");
+
                 return this.m_attk;
+            }
 
             carteAdverse.get().impacterPv(this.m_attk);
+            System.out.println(m_nom + " inflige "+m_attk +
+                    " dégâts à "+carteAdverse.get().getNom());
 
             //contact mortel qui one shot
             if ( detientPouvoir(TypePouvoir.CONTACT_MORTEL) &&
             carteAdverse.get().estAnimal() )
+            {
                 carteAdverse.get().tuer();
+                System.out.println(m_nom + " viens de tuer "+
+                        carteAdverse.get().getNom()+" avec son pouvoir" +
+                        "CONTACT MORTEL ! ");
+            }
 
             // si la carte de devant se fait attaquer nous aussi
             if ( carteAdverse.get().detientPouvoir(TypePouvoir.PIQUES_POINTUES) )
+            {
                 impacterPv(1);
+                System.out.println(this.m_nom + " subit voit sa santé" +
+                        "réduite de 1 à cause du pouvoir PIQUES de " +
+                        carteAdverse.get().getNom());
+            }
 
             return 0; //pas de score
 
