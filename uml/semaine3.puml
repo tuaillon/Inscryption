@@ -14,14 +14,25 @@ package inscryption
             -NB_DE_PARTIES_POUR_GAGNER : Integer
             -NB_DE_POINTS_POUR_GAGNER_PARTIE : Integer
             -NB_DE_PARTIES_POUR_GAGNER : Integer
-            m_joueur : Joueur
-            m_adversaire : Adversaire
-            m_plateau : Plateau
+            -m_joueur : Joueur
+            -m_adversaire : Adversaire
+            -m_plateau : Plateau
+            -m_bApioche : Boolean
+            -m_finTour : Boolean
             +<<create>> Game()
             +lancerJeu()
             +mettreAJourEtat()
             +mettreAJourPlateau()
-            +executerPouvoirCroissance();
+            +executerPouvoirCroissance()
+            +piochePossible() : Boolean
+            +interdirePioche()
+            +autoriserPioche()
+            +terminerTour()
+            +afficherStats()
+            +executerTourJoueur()
+            +executerTourAdversaire()
+            +preparerJeu()
+            +executerPouvoirCoureur()
         }
 
         class Joueur
@@ -31,6 +42,7 @@ package inscryption
             -NB_MIN_MAIN : Integer
             +<<create>> Joueur()
             +{static}ACTIONs_POSSIBLES : String[*]
+            +getNbCarteMain() : Integer
             +getCarteMain(index : Integer) : CarteAnimal
             +retirerCarteMain(index : Integer)
             +afficherMain()
@@ -38,7 +50,7 @@ package inscryption
             +placerCarte(c: CarteAnimal, p: Plateau, pos: Position)
             +peutPlacerCarte(c: CarteAnimal, p: Plateau, pos: Position) : Boolean
             +sacrifier(p: Plateau, pos: Position, c: CarteAnimal)
-            +afficherInfosTour(p: Plateau)
+            +afficherTour(p: Plateau)
             +mettreAJourOs(valeur: Integer)
             +nbEspaceMots(carte: CarteAnimal) : String
         }
@@ -72,26 +84,51 @@ package inscryption
             +retirerCarteA(p: Position)
             +afficherPlateau()
             +estEnnemi(pos: Position)
+            +reinitialiser()
+            +changerCarte(pos: Position, carte: Carte)
+            +deplacerCarte(source: Position, dest: position)
+            +afficherPlateauEntier(prochaineAdversaire: Optional<Carte>)
+            +afficherLigneCarte(ligne: Optional<? extends Carte>[], afficherPosition: Boolean, posAdverse: Boolean)
+            +afficherSurUneLigne(ligne: String[])
+            +paddingLigne(s: String, n: Integer) : String
+            +placementPossible(pos: Position) : Boolean
+            +estEnnemi(pos: Position) : Boolean
+            +deplacementDroitePossible(pos: Position) : Boolean
+            +deplacementGauchePossible(pos: Position) : Boolean
+            +posADroite(pos: Position) : Position
+            +posAGauche(pos: Position) : Position
         }
 
         class Adversaire
         {
-            -NB_MIN_MAIN: Integer
-            -m_main : CarteAnimal[*]
-            -m_pioche : Pioche
+            -m_prochaineAction : Optional<CarteAnimal>[]
             +<<create>> Adversaire
-            +peutPlacerCarte(c: CarteAnimal, p: Plateau, pos: Position) : Boolean
+            +getProchaineAction() : Optional<CarteAnimal>[]
+            +jouerProchain(p: Plateau)
+            +executerMeilleur(p: Plateau)
+            +mettreAJourStats()
+            +reinitialiserProchain()
             +afficherProchain()
         }
 
         class Entite
         {
+            #NB_MIN_MAIN : Integer
             #m_score: Integer
             #m_nbOsTotal: Integer
             #m_nbGouttesDeSangTotal: Integer
-
+            #m_pioche: Pioche
+            #m_main : CarteAnimal[*]
+            +<<create>> Entite
+            +resetMain()
+            +piocher()
             +getScore() : Integer
             +modifierScore(valeur: Integer)
+            +resetScore()
+            +getNbOsTotal() : Integer
+            +getNbGouttesDeSang() : Integer
+            +afficherScore()
+            +resetStats()
         }
 
         class Input
@@ -137,19 +174,20 @@ package inscryption
             #m_pv : Integer
             #m_pouvoirs : TypePouvoir[*]
             #NB_MAX_CARACTERE : Integer
-            +<<create>> Carte()
             +<<create>> Carte(String nom, Integer pv)
             +{abstract}attaquer(carteAdverse: Optional<Carte>) : Integer
             +estMort() : Boolean
             +getNom() : String
             +getPv() : Integer
             #impacterPV(valeur: Integer)
-            +getInfos() : String
-            +getToutesInfosCartes() : String
+            +{abstract}getInfos() : String
+            +{abstract}getToutesInfosCartes() : String
             +getNbLettres() : Integer
             +getNbMaxCaractere() : Integer
             +nbEspaceMots(carte: Carte) : String
             +detientPouvoir(pv: TypePouvoir)
+            +estAnimal() : Boolean
+            +estObstacle() : Boolean
         }
 
         class CarteObstacle
@@ -157,7 +195,8 @@ package inscryption
            +<<create>> CarteObstacle(String nom, Integer pv)
            +attaquer(carteAdverse: Optional<Carte>) : Integer
            +getInfos() : String
-           +getToutesInfosCartes() : String
+           +getToutesInfosCarte() : String
+           +estObstacle() : Boolean
         }
 
         class CarteAnimal
@@ -172,8 +211,11 @@ package inscryption
             +getOs() : Integer
             +getGouttesDeSang() : Integer
             +getAtt() : Integer
+            +impacterAtt(valeur: Integer)
             +getInfos() : String
             +getToutesInfosCartes() : String
+            +afficherPouvoirs() : String
+            +estAnimal() : Boolean
         }
 
         class CarteFactory
