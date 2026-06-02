@@ -87,7 +87,7 @@ public final class Game
                 executerTourAdversaire();
                 mettreAjourPlateau();
                 executerPouvoirCroissance();
-                
+
                 Thread.sleep(2500);
 
 
