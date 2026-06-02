@@ -71,20 +71,25 @@ public final class Game
                         input.changerInput(sc.nextLine());
                     }
                 }
+                System.out.println("\t\t\t\t-- ACTIONS REALISEES --");
                 System.out.println("#-----------------------------");
-                System.out.println("#Attaques");
+                System.out.println("Attaques du Joueur");
                 System.out.println("#-----------------------------");
 
                 executerTourJoueur();
                 executerPouvoirCoureur();
                 mettreAjourPlateau();
 
+                System.out.println("\n#-----------------------------");
+                System.out.println("Attaques de l'Adversaire");
+                System.out.println("#-----------------------------");
+
                 executerTourAdversaire();
                 executerPouvoirCoureur();
                 mettreAjourPlateau();
 
-                System.out.println("#-----------------------------");
-                System.out.println("#Fin Attaques");
+                System.out.println("\n#-----------------------------");
+                System.out.println("Fin des Attaques");
                 System.out.println("#-----------------------------");
                 tour++;
                 m_finTour = false;

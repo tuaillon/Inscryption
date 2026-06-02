@@ -49,7 +49,7 @@ public class CarteAnimal extends Carte
             if ( carteAdverse.get().detientPouvoir(TypePouvoir.PUANT) )
             {
                 impacterAtt(-1);
-                System.out.println(this.m_nom + " subit voit son attaque" +
+                System.out.println(this.m_nom + " voit son attaque" +
                         "réduite de 1 à cause du pouvoir PUANT de "+
                         carteAdverse.get().getNom());
             }
