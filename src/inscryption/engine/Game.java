@@ -55,7 +55,7 @@ public final class Game
                     m_plateau.afficherPlateauEntier(m_adversaire.getProchaineAction());
                     m_joueur.afficherMain();
                     afficherStats();
-
+                    System.out.println("------------------------");
                     System.out.println("Actions possibles : ");
                     System.out.println("[fin] Terminer votre tour");
                     System.out.println("[piocher] Piocher une carte");

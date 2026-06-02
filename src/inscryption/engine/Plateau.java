@@ -183,7 +183,31 @@ public class Plateau
         for ( int i = 0; i < NB_CARTES_PAR_LIGNE; i++ )
         {
             if ( ligne[i].isPresent() && ligne[i].get().estAnimal() )
-                ligneCourante[i] = "|" + paddingLigne("Pouvoir", maxCharLigne) + "|   ";
+            {
+                // Afficher les pouvoirs de la carte
+                String pouvoirCarte = "";
+                for (TypePouvoir pv : TypePouvoir.values())
+                {
+                    if (ligne[i].get().detientPouvoir(pv))
+                    {
+                        if (pv.name().length() > maxCharLigne)
+                        {
+                            if (pv.name().equals(TypePouvoir.CONTACT_MORTEL.name()))
+                                pouvoirCarte += "CONT. MORT.";
+                            else if (pv.name().equals(TypePouvoir.PIQUES_POINTUES.name()))
+                                pouvoirCarte += "PICS POINT.";
+                            else if (pv.name().equals(TypePouvoir.NOMBREUSES_VIES.name()))
+                                pouvoirCarte += "NOMB. VIES";
+                        }
+                        else
+                        {
+                            pouvoirCarte += pv.name();
+                        }
+
+                    }
+                }
+                ligneCourante[i] = "|" + paddingLigne(pouvoirCarte, maxCharLigne) + "|   ";
+            }
             else
                 ligneCourante[i] = "|" + paddingLigne("", maxCharLigne) + "|   ";
         }
