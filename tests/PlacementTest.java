@@ -22,4 +22,6 @@ public class PlacementTest
         assertFalse(p.placementPossible(Position.B1));
 
     }
+
+
 }

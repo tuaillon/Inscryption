@@ -27,6 +27,8 @@ public final class Game
 
     public Game() {};
 
+    public Plateau getPlateau() {return m_plateau;}
+
     public void lancerJeu() throws Exception
     {
         int partiesGagnees = 0;
@@ -37,9 +39,10 @@ public final class Game
             System.out.println("Partie : "+partie + " -------------------");
             System.out.println();
 
+            executerPierreDeSactifice();
+
             preparerJeu(); //bah oui c'est quand même mieux de reset le score
 
-            // Si la différence entre deux scores
             while ( Math.abs(m_joueur.getScore() - m_adversaire.getScore()) <
                     NB_DE_POINTS_POUR_GAGNER_PARTIE )
             {
@@ -70,26 +73,22 @@ public final class Game
                         input.changerInput(sc.nextLine());
                     }
                 }
-
                 System.out.println("\t\t\t\t-- ACTIONS REALISEES --");
                 System.out.println("#-----------------------------");
                 System.out.println("Attaques du Joueur");
                 System.out.println("#-----------------------------");
 
                 executerTourJoueur();
+                executerPouvoirCoureur();
                 mettreAjourPlateau();
-                executerPouvoirCroissance();
 
                 System.out.println("\n#-----------------------------");
                 System.out.println("Attaques de l'Adversaire");
                 System.out.println("#-----------------------------");
 
                 executerTourAdversaire();
+                executerPouvoirCoureur();
                 mettreAjourPlateau();
-                executerPouvoirCroissance();
-                
-                Thread.sleep(2500);
-
 
                 System.out.println("\n#-----------------------------");
                 System.out.println("Fin des Attaques");
@@ -204,6 +203,7 @@ public final class Game
                 {
                     m_plateau.changerCarte(pos,
                             CarteFactory.creerCarteAnimal(TypeAnimal.LOUP));
+                    System.out.println("Louveteau s'est changé en loup !");
                 }
         }
     }
@@ -217,18 +217,33 @@ public final class Game
                 if ( m_plateau.getPlateau().get(pos).get().
                         detientPouvoir(TypePouvoir.COUREUR) )
                 {
+                    String nom =m_plateau.getPlateau().
+                            get(pos).get().getNom();
                     if (m_plateau.deplacementDroitePossible(pos) )
+                    {
                         m_plateau.deplacerCarte(pos,
                                 m_plateau.posADroite(pos));
-
+                        System.out.println(nom+ " se déplace à droite grâce" +
+                                " à son pouvoir COUREUR !");
+                    }
                     else if (m_plateau.deplacementGauchePossible(pos) )
+                    {
                         m_plateau.deplacerCarte(pos,
                                 m_plateau.posAGauche(pos));
+                        System.out.println(nom + " se déplace à gauche grâce" +
+                                " à son pouvoir COUREUR !");
+                    }
 
                     //sinon ne pas bouger
+                    System.out.println("Pouvoir COUREUR : rien ne s'est produit !");
                 }
             }
         }
+    }
+
+    public void executerPierreDeSactifice()
+    {
+
     }
 
 }

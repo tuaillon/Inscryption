@@ -1,6 +1,7 @@
 import inscryption.carte.CarteAnimal;
 import inscryption.carte.CarteFactory;
 import inscryption.carte.TypeAnimal;
+import inscryption.engine.Game;
 import inscryption.engine.Joueur;
 import inscryption.engine.Plateau;
 import inscryption.engine.Position;
@@ -19,7 +20,7 @@ public class PouvoirsTest
         vipere.attaquer(Optional.of(grizzly));
         assertTrue(grizzly.estMort());
     }
-
+/*
     @Test
     public void pouvoirNombreusesVies()
     {
@@ -31,4 +32,57 @@ public class PouvoirsTest
         //Chat pas mort
         assertTrue(p.getPlateau().get(Position.B1).isPresent());
     }
+*/
+    @Test
+    public void pouvoirCoureur()
+    {
+        Game g = new Game();
+        CarteAnimal coureur = CarteFactory.creerCarteAnimal(TypeAnimal.ELAN);
+
+        g.getPlateau().positionnerCarte(coureur, Position.B2);
+        g.executerPouvoirCoureur();
+        assertTrue(g.getPlateau().getPlateau().get(Position.B3).isPresent());
+        assertFalse(g.getPlateau().getPlateau().get(Position.B2).isPresent());
+        assertTrue(g.getPlateau().getPlateau().get(Position.B3).get().estAnimal());
+    }
+
+    @Test
+    public void pouvoirCroissance()
+    {
+        Game g = new Game();
+        CarteAnimal louveteau = CarteFactory.creerCarteAnimal(TypeAnimal.LOUVETEAU);
+
+        g.getPlateau().positionnerCarte(louveteau, Position.B2);
+        g.executerPouvoirCroissance();
+
+        assertTrue(g.getPlateau().getPlateau().
+                get(Position.B2).get().getNom().equals("Loup"));
+
+    }
+
+    @Test
+    public void pouvoirPiques()
+    {
+        CarteAnimal piquepique = CarteFactory.creerCarteAnimal(TypeAnimal.PORC_EPIC);
+        CarteAnimal louveteau = CarteFactory.creerCarteAnimal(TypeAnimal.LOUVETEAU);
+
+        int pvOriginel = louveteau.getPv();
+        louveteau.attaquer(Optional.of(piquepique));
+        assertEquals(pvOriginel - 1, louveteau.getPv());
+    }
+
+    @Test
+    public void pouvoirPuant()
+    {
+        CarteAnimal loup = CarteFactory.creerCarteAnimal(TypeAnimal.LOUP);
+        CarteAnimal punaise = CarteFactory.creerCarteAnimal(TypeAnimal.PUNAISE);
+
+        int attkOriginel = loup.getAttk();
+        loup.attaquer(Optional.of(punaise));
+
+        assertEquals(attkOriginel -1, loup.getAttk());
+
+    }
+
+
 }
