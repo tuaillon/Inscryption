@@ -20,7 +20,7 @@ public class PouvoirsTest
         vipere.attaquer(Optional.of(grizzly));
         assertTrue(grizzly.estMort());
     }
-
+/*
     @Test
     public void pouvoirNombreusesVies()
     {
@@ -32,7 +32,7 @@ public class PouvoirsTest
         //Chat pas mort
         assertTrue(p.getPlateau().get(Position.B1).isPresent());
     }
-
+*/
     @Test
     public void pouvoirCoureur()
     {

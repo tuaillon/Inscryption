@@ -39,6 +39,8 @@ public final class Game
             System.out.println("Partie : "+partie + " -------------------");
             System.out.println();
 
+            executerPierreDeSactifice();
+
             preparerJeu(); //bah oui c'est quand même mieux de reset le score
 
             while ( Math.abs(m_joueur.getScore() - m_adversaire.getScore()) <
@@ -237,6 +239,11 @@ public final class Game
                 }
             }
         }
+    }
+
+    public void executerPierreDeSactifice()
+    {
+
     }
 
 }
