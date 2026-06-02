@@ -158,6 +158,7 @@ public class Joueur extends Entite
                         if ( !listeCartesSacrifiables.get(emplacement).
                                 detientPouvoir(TypePouvoir.NOMBREUSES_VIES) )
                             p.retirerCarteA(listesPositionCartesSacrifiables.get(emplacement));
+                        //System.out.println(listesPositionCartesSacrifiables.get(emplacement));
 
                         listeCartesSacrifiables.remove(listeCartesSacrifiables.get(emplacement));
                         listesPositionCartesSacrifiables.remove(listesPositionCartesSacrifiables.get(emplacement));
