@@ -39,6 +39,7 @@ public final class Game
 
             preparerJeu(); //bah oui c'est quand même mieux de reset le score
 
+            // Si la différence entre deux scores
             while ( Math.abs(m_joueur.getScore() - m_adversaire.getScore()) <
                     NB_DE_POINTS_POUR_GAGNER_PARTIE )
             {
@@ -69,6 +70,7 @@ public final class Game
                         input.changerInput(sc.nextLine());
                     }
                 }
+
                 System.out.println("\t\t\t\t-- ACTIONS REALISEES --");
                 System.out.println("#-----------------------------");
                 System.out.println("Attaques du Joueur");
@@ -85,6 +87,9 @@ public final class Game
                 executerTourAdversaire();
                 mettreAjourPlateau();
                 executerPouvoirCroissance();
+                
+                Thread.sleep(2500);
+
 
                 System.out.println("\n#-----------------------------");
                 System.out.println("Fin des Attaques");
