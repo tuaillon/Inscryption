@@ -29,4 +29,18 @@ public class AttaqueTest
         vipere.attaquer(Optional.of(grizzly));
         assertTrue(grizzly.estMort());
     }
+
+    @Test
+    public void attkNormale()
+    {
+        CarteAnimal grizzly = CarteFactory.creerCarteAnimal(TypeAnimal.GRIZZLY);
+        CarteAnimal loup = CarteFactory.creerCarteAnimal(TypeAnimal.LOUP);
+
+        int pointsG = grizzly.attaquer(Optional.of(loup));
+        int pointsL = loup.attaquer(Optional.of(grizzly));
+
+        assertEquals(3, grizzly.getPv());
+        assertTrue(loup.estMort());
+
+    }
 }
