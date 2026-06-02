@@ -62,25 +62,9 @@ public class CarteAnimal extends Carte
                 return this.m_attk;
             }
 
-            // Attaque l'ennemi
-            // Si l'attaque inflige des dégâts supérieurs aux pvs de l'adversaire,
-            if (this.m_attk > carteAdverse.get().getPv())
-            {
-                System.out.println(m_nom + " inflige "+ carteAdverse.get().getPv()+
-                        " dégâts à "+carteAdverse.get().getNom());
-                int dgtsScore = this.m_attk - carteAdverse.get().getPv();
-
-                carteAdverse.get().impacterPv(carteAdverse.get().getPv());
-                System.out.println(m_nom + " attaque le score de "+ dgtsScore + " !");
-                return dgtsScore;
-            }
-            else
-            {
-                carteAdverse.get().impacterPv(this.m_attk);
-                System.out.println(m_nom + " inflige "+ m_attk +
-                        " dégâts à "+carteAdverse.get().getNom());
-            }
-
+            carteAdverse.get().impacterPv(this.m_attk);
+            System.out.println(m_nom + " inflige "+m_attk +
+                    " dégâts à "+carteAdverse.get().getNom());
 
             //contact mortel qui one shot
             if ( detientPouvoir(TypePouvoir.CONTACT_MORTEL) &&
