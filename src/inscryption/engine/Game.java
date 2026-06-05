@@ -14,9 +14,9 @@ public final class Game
     private final int NB_DE_PARTIES_POUR_GAGNER = 2;
     private final int NB_DE_POINTS_POUR_GAGNER_PARTIE = 5;
 
-    Joueur m_joueur = new Joueur();
-    Adversaire m_adversaire = new Adversaire();
-    Plateau m_plateau = new Plateau();
+    private Joueur m_joueur = new Joueur();
+    private Adversaire m_adversaire = new Adversaire();
+    private Plateau m_plateau = new Plateau();
     private boolean m_bApioche = false;
     private boolean m_finTour = false;
 
@@ -240,6 +240,16 @@ public final class Game
                 }
             }
         }
+    }
+
+    public Joueur getJoueur()
+    {
+        return m_joueur;
+    }
+
+    public Adversaire getAdversaire()
+    {
+        return m_adversaire;
     }
 
     public void executerPierreDeSactifice()

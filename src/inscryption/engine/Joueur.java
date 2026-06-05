@@ -145,7 +145,7 @@ public class Joueur extends Entite
                 // on parcourt les cartes sacrifiables pour les afficher et que le joueur choisisse quelle(s) carte(s) il souhaite sacrifier
                 for(int i = 0; i < listeCartesSacrifiables.size(); i++)
                 {
-                    if ((choix.equals("1")|| choix.equals("2") || choix.equals("3") || choix.equals(("4"))) && Integer.parseInt(choix) <= listeCartesSacrifiables.size())
+                    if (Integer.parseInt(choix) <= listeCartesSacrifiables.size())
                     {
                         // Augmente le nombre de gouttes de sang
                         m_nbGouttesDeSangTotal++;
