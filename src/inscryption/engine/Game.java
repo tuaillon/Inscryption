@@ -186,6 +186,7 @@ public final class Game
         m_adversaire.resetScore();
         m_joueur.resetScore();
         m_adversaire.resetMain();
+        m_adversaire.reinitialiserProchain();
         m_joueur.resetMain();
         m_joueur.resetStats();
         m_adversaire.resetStats();

@@ -67,7 +67,7 @@ public class Adversaire extends Entite
     }
 
 
-    private void reinitialiserProchain()
+    public void reinitialiserProchain()
     {
         for ( int i = 0; i < m_prochaineAction.length; i++ ) {
             m_prochaineAction[i] = Optional.empty();
