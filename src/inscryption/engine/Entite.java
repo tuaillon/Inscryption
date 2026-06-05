@@ -18,7 +18,7 @@ public abstract class Entite
 
     public void resetMain() throws Exception {
         m_main.clear();
-        m_pioche.regenererPiocheDebutEcureuil();
+        m_pioche = new Pioche();
         for ( int i = 0; i < NB_MIN_MAIN; i++ )
             piocher();
     }

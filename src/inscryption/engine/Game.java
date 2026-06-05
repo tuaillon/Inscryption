@@ -36,12 +36,14 @@ public final class Game
 
         for ( int partie = 1; partie <= NB_DE_PARTIES; partie++ )
         {
+
             System.out.println("Partie : "+partie + " -------------------");
             System.out.println();
 
-            executerPierreDeSactifice();
-
             preparerJeu(); //bah oui c'est quand même mieux de reset le score
+
+            if ( partie == 3 )
+                executerPierreDeSacrifice();
 
             while ( Math.abs(m_joueur.getScore() - m_adversaire.getScore()) <
                     NB_DE_POINTS_POUR_GAGNER_PARTIE )
@@ -186,10 +188,10 @@ public final class Game
         m_adversaire.resetScore();
         m_joueur.resetScore();
         m_adversaire.resetMain();
-        m_joueur.resetMain();
         m_joueur.resetStats();
         m_adversaire.resetStats();
-        m_plateau.reinitialiser();
+        m_plateau = new Plateau();
+        m_adversaire.reinitialiserProchain();
     }
 
     public void executerPouvoirCroissance()
@@ -241,9 +243,15 @@ public final class Game
         }
     }
 
-    public void executerPierreDeSactifice()
+    public void executerPierreDeSacrifice()
     {
+        System.out.println("=============Pierre de Sacrifice=============");
+        System.out.println("Il est l'heure de sacrifier une carte !");
 
+
+
+
+        System.out.println("=============FIN- Pierre de Sacrifice=============");
     }
 
 }

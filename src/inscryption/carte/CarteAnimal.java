@@ -30,6 +30,7 @@ public class CarteAnimal extends Carte
         m_bVolant = volant;
         m_pouvoirs = new ArrayList<TypePouvoir>();
         m_pouvoirs.add(pouv);
+        m_pouvoirsActifs = new ArrayList<TypePouvoir>();
 
     }
 

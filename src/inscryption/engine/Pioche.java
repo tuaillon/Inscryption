@@ -62,34 +62,6 @@ public class Pioche
         }
     }
 
-    public void regenererPiocheDebutEcureuil() throws Exception
-    {
-        viderPioche();
-        // Générer une pioche constituée majoritairement d'écureuils
-        // Choix d'une plage générée aléatoirement
-        Random rnd = new Random();
-        int range = NB_MAX_ECUREUIL - NB_MIN_ECUREUIL + 1;
-        int nbCartesEcureuil = rnd.nextInt(NB_MIN_ECUREUIL) + range;
-
-        // Ajouter ce nombre choisi aléatoirement à la pioche
-        for (int i = 0; i < nbCartesEcureuil; i++)
-        {
-            m_pioche.push(CarteFactory.creerCarteAnimal(TypeAnimal.ECUREUIL));
-        }
-
-        // Ajouter le nombre de cartes restantes à la pioche
-        int nbCarteAPiocher = NB_MAX_CARTES - nbCartesEcureuil;
-
-        // Générer le reste de la pioche
-        for (int i = 0; i < nbCarteAPiocher; i++)
-        {
-            m_pioche.push(CarteFactory.creerCarteAnimalRandom());
-        }
-
-        // Mélanger les cartes
-        Collections.shuffle(m_pioche);
-    }
-
     public void viderPioche() {
         m_pioche.clear();
     }

@@ -9,6 +9,7 @@ public abstract class Carte
     protected String m_nom;
     protected int m_pv;
     protected List<TypePouvoir> m_pouvoirs;
+    protected List<TypePouvoir> m_pouvoirsActifs;
 
     // 9 = nb max de caractères (louveteau) -> 10 caractère pour un espace au moins
     protected final int NB_MAX_CARACTERE = 9;
@@ -24,6 +25,14 @@ public abstract class Carte
     {
         return m_pouvoirs.contains(pv);
     }
+
+    public boolean pouvoirActif(TypePouvoir pv) { return m_pouvoirsActifs.contains(pv); }
+
+    public void activerPouvoir(TypePouvoir pv)
+    { if ( !m_pouvoirsActifs.contains(pv) )
+        m_pouvoirsActifs.add(pv);
+    }
+
 
     public abstract int attaquer(Optional<Carte> carteAdverse);
 

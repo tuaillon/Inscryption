@@ -67,23 +67,10 @@ public class Adversaire extends Entite
     }
 
 
-    private void reinitialiserProchain()
+    public void reinitialiserProchain()
     {
         for ( int i = 0; i < m_prochaineAction.length; i++ ) {
             m_prochaineAction[i] = Optional.empty();
         }
-    }
-
-    public void afficherProchain()
-    {
-        System.out.println("#======Prochaines Actions ==============");
-        for (int i = 0; i < m_prochaineAction.length; i++ )
-        {
-            System.out.println((m_prochaineAction[i].isPresent() ?
-                    m_prochaineAction[i].get().getInfos()
-                            : "Aucun" )+ "  ----> "+ "A"+(i+1));
-        }
-        System.out.println("#======================================");
-
     }
 }
