@@ -280,7 +280,7 @@ Carte .> TypePouvoir : <<uses>>
 CarteAnimal --|> Carte : <<extends>>
 CarteObstacle --|> Carte : <<extends>>
 
-
+Pioche .> CarteFactory : <<uses>>
 Joueur --|> Entite : <<extends>>
 Adversaire --|> Entite : <<extends>>
 Game .> Joueur : <<uses>>
