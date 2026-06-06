@@ -7,5 +7,7 @@ public enum TypePouvoir
     PUANT,
     COUREUR,
     CONTACT_MORTEL,
-    PIQUES_POINTUES
+    PIQUES_POINTUES,
+
+    AUCUN
 }

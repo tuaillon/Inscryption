@@ -29,6 +29,7 @@ public abstract class Entite
     public void resetScore() { m_score = 0; }
     public int getNbOsTotal() { return m_nbOsTotal; }
     public int getNbGouttesDeSang() { return m_nbGouttesDeSangTotal; }
+    public List<CarteAnimal> getMain() { return m_main; }
 
     public Entite()
     {

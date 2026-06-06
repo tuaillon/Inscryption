@@ -17,7 +17,8 @@ public class CarteAnimal extends Carte
         m_gouttesDeSang = gouttes;
         m_os = os;
         m_bVolant = volant;
-        m_pouvoirs = new ArrayList<TypePouvoir>();
+        m_pouvoir = TypePouvoir.AUCUN;
+        m_pouvoirsActifs = new ArrayList<TypePouvoir>();
 
     }
     //autre constr avec pouvoir si la carte en a un
@@ -28,8 +29,7 @@ public class CarteAnimal extends Carte
         m_gouttesDeSang = gouttes;
         m_os = os;
         m_bVolant = volant;
-        m_pouvoirs = new ArrayList<TypePouvoir>();
-        m_pouvoirs.add(pouv);
+        m_pouvoir = pouv;
         m_pouvoirsActifs = new ArrayList<TypePouvoir>();
 
     }
@@ -146,10 +146,10 @@ public class CarteAnimal extends Carte
 
     private String afficherPouvoirs()
     {
-        if ( m_pouvoirs.isEmpty() )
+        if ( m_pouvoirsActifs.isEmpty() )
             return "    Aucun Pouvoir";
         String res = "    ";
-        for ( TypePouvoir pv : m_pouvoirs )
+        for ( TypePouvoir pv : m_pouvoirsActifs )
         {
             res += pv.name() + " ";
         }

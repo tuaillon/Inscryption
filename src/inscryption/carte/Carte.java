@@ -8,8 +8,8 @@ public abstract class Carte
 {
     protected String m_nom;
     protected int m_pv;
-    protected List<TypePouvoir> m_pouvoirs;
-    protected List<TypePouvoir> m_pouvoirsActifs;
+    protected TypePouvoir m_pouvoir; //pouvoir de predilection
+    protected List<TypePouvoir> m_pouvoirsActifs; //vrais pouvoir peuvent etre nimporte quoi
 
     // 9 = nb max de caractères (louveteau) -> 10 caractère pour un espace au moins
     protected final int NB_MAX_CARACTERE = 9;
@@ -18,20 +18,20 @@ public abstract class Carte
     {
         m_nom = nom;
         m_pv = pv;
-        m_pouvoirs = new ArrayList<TypePouvoir>();
+        m_pouvoirsActifs = new ArrayList<TypePouvoir>();
     }
 
     public boolean detientPouvoir(TypePouvoir pv)
     {
-        return m_pouvoirs.contains(pv);
+        return m_pouvoirsActifs.contains(pv);
     }
-
-    public boolean pouvoirActif(TypePouvoir pv) { return m_pouvoirsActifs.contains(pv); }
 
     public void activerPouvoir(TypePouvoir pv)
     { if ( !m_pouvoirsActifs.contains(pv) )
         m_pouvoirsActifs.add(pv);
     }
+
+    public TypePouvoir getPouvoirAssocie() { return m_pouvoir; }
 
 
     public abstract int attaquer(Optional<Carte> carteAdverse);
@@ -81,4 +81,5 @@ public abstract class Carte
     //pour pas dinstanceof (bancal tout de même)
     public boolean estAnimal() { return false; }
     public boolean estObstacle() { return false; }
+
 }

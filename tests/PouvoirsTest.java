@@ -1,6 +1,7 @@
 import inscryption.carte.CarteAnimal;
 import inscryption.carte.CarteFactory;
 import inscryption.carte.TypeAnimal;
+import inscryption.carte.TypePouvoir;
 import inscryption.engine.Game;
 import inscryption.engine.Joueur;
 import inscryption.engine.Plateau;
@@ -17,6 +18,7 @@ public class PouvoirsTest
     {
         CarteAnimal vipere = CarteFactory.creerCarteAnimal(TypeAnimal.VIPERE);
         CarteAnimal grizzly = CarteFactory.creerCarteAnimal(TypeAnimal.GRIZZLY);
+        vipere.activerPouvoir(TypePouvoir.CONTACT_MORTEL);
         vipere.attaquer(Optional.of(grizzly));
         assertTrue(grizzly.estMort());
     }
@@ -31,6 +33,8 @@ public class PouvoirsTest
         j.sacrifier(chat,p,Position.B1);
         //Chat pas mort
         assertTrue(p.getPlateau().get(Position.B1).isPresent());
+
+        //le test y est mais le scanner pose probleme
     }
 */
     @Test
@@ -38,6 +42,7 @@ public class PouvoirsTest
     {
         Game g = new Game();
         CarteAnimal coureur = CarteFactory.creerCarteAnimal(TypeAnimal.ELAN);
+        coureur.activerPouvoir(TypePouvoir.COUREUR);
 
         g.getPlateau().positionnerCarte(coureur, Position.B2);
         g.executerPouvoirCoureur();
@@ -51,6 +56,7 @@ public class PouvoirsTest
     {
         Game g = new Game();
         CarteAnimal louveteau = CarteFactory.creerCarteAnimal(TypeAnimal.LOUVETEAU);
+        louveteau.activerPouvoir(TypePouvoir.CROISSANCE);
 
         g.getPlateau().positionnerCarte(louveteau, Position.B2);
         g.executerPouvoirCroissance();
@@ -65,6 +71,7 @@ public class PouvoirsTest
     {
         CarteAnimal piquepique = CarteFactory.creerCarteAnimal(TypeAnimal.PORC_EPIC);
         CarteAnimal louveteau = CarteFactory.creerCarteAnimal(TypeAnimal.LOUVETEAU);
+        piquepique.activerPouvoir(TypePouvoir.PIQUES_POINTUES);
 
         int pvOriginel = louveteau.getPv();
         louveteau.attaquer(Optional.of(piquepique));
@@ -76,6 +83,7 @@ public class PouvoirsTest
     {
         CarteAnimal loup = CarteFactory.creerCarteAnimal(TypeAnimal.LOUP);
         CarteAnimal punaise = CarteFactory.creerCarteAnimal(TypeAnimal.PUNAISE);
+        punaise.activerPouvoir(TypePouvoir.PUANT);
 
         int attkOriginel = loup.getAttk();
         loup.attaquer(Optional.of(punaise));
