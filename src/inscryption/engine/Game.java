@@ -41,8 +41,13 @@ public final class Game
 
             preparerJeu(); //bah oui c'est quand même mieux de reset le score
 
-            if ( partie == 3 )
+            if ( partie == 2 )
+            {
+                proposerUneCarte(2);
                 executerPierreDeSacrifice();
+            }
+
+            m_plateau = new Plateau();
 
             while ( Math.abs(m_joueur.getScore() - m_adversaire.getScore()) <
                     NB_DE_POINTS_POUR_GAGNER_PARTIE )
@@ -188,8 +193,8 @@ public final class Game
         m_joueur.resetScore();
         m_adversaire.resetMain();
         m_joueur.resetStats();
+        m_joueur.resetMain();
         m_adversaire.resetStats();
-        m_plateau = new Plateau();
         m_adversaire.reinitialiserProchain();
     }
 
@@ -211,41 +216,38 @@ public final class Game
 
     public void executerPouvoirCoureur()
     {
+        //stocker les positions pour eviter de deplacer les elans a l'infini dans le for
+        // si on parcourait simplement tout le plateau
+        List<Position> positionsCoureurs = new ArrayList<>();
         for ( Position pos : m_plateau.getPlateau().keySet() )
         {
-            if ( m_plateau.getPlateau().get(pos).isPresent() )
-            {
-                if ( m_plateau.getPlateau().get(pos).get().
-                        detientPouvoir(TypePouvoir.COUREUR) )
-                {
-                    String nom =m_plateau.getPlateau().
-                            get(pos).get().getNom();
-                    if (m_plateau.deplacementDroitePossible(pos) )
-                    {
-                        m_plateau.deplacerCarte(pos,
-                                m_plateau.posADroite(pos));
-                        System.out.println(nom+ " se déplace à droite grâce" +
-                                " à son pouvoir COUREUR !");
-                    }
-                    else if ( m_plateau.deplacementGauchePossible(pos) )
-                    {
-                        m_plateau.deplacerCarte(pos,
-                                m_plateau.posAGauche(pos));
-                        System.out.println(nom + " se déplace à gauche grâce" +
-                                " à son pouvoir COUREUR !");
-                    }
+            if ( m_plateau.getPlateau().get(pos).isPresent() &&
+                    m_plateau.getPlateau().get(pos).get().detientPouvoir(TypePouvoir.COUREUR) )
+                positionsCoureurs.add(pos);
+        }
 
-                    //sinon ne pas bouger
-                    System.out.println("Pouvoir COUREUR : rien ne s'est produit !");
-                }
+        for ( Position pos : positionsCoureurs )
+        {
+            String nom = m_plateau.getPlateau().get(pos).get().getNom();
+            if ( m_plateau.deplacementDroitePossible(pos) )
+            {
+                m_plateau.deplacerCarte(pos, m_plateau.posADroite(pos));
+                System.out.println(nom+ " se déplace à droite grâce à son pouvoir COUREUR !");
             }
+            else if ( m_plateau.deplacementGauchePossible(pos) )
+            {
+                m_plateau.deplacerCarte(pos, m_plateau.posAGauche(pos));
+                System.out.println(nom + " se déplace à gauche grâce à son pouvoir COUREUR !");
+            }
+            else
+                System.out.println("Pouvoir COUREUR : rien ne s'est produit !");
         }
     }
 
     public Joueur getJoueur(){ return m_joueur; }
     public Adversaire getAdversaire() { return m_adversaire; }
 
-    public void executerPierreDeSacrifice()
+    private void executerPierreDeSacrifice()
     {
         System.out.println("=============Pierre de Sacrifice=============");
         System.out.println("Il est l'heure de sacrifier une carte !");
@@ -258,11 +260,19 @@ public final class Game
             if ( pos.name().startsWith("B") && m_plateau.getPlateau().get(pos).isPresent() )
             {
                 Carte c = m_plateau.getPlateau().get(pos).get();
-                if ( c.estAnimal() ) {
+                if ( c.estAnimal() )
+                {
                     choixPossibles.add((CarteAnimal) c);
                     positionsPossibles.add(pos);
                 }
             }
+        }
+
+        if ( choixPossibles.isEmpty() )
+        {
+            System.out.println("Aucune carte n'est sacrifiable !");
+            System.out.println("=============FIN- Pierre de Sacrifice=============");
+            return;
         }
 
         int choix = 0;
@@ -270,43 +280,85 @@ public final class Game
 
         while ( choix <= 0 || choix > choixPossibles.size() )
         {
-            for ( int i = 0; i < choixPossibles.size() ; i++ )
-            {
-                System.out.println("["+(i+1)+"] "+choixPossibles.get(i).getNom()+" Pouvoir associé : "+
+            for ( int i = 0; i < choixPossibles.size(); i++ )
+                System.out.println("[" + (i + 1) + "] " + choixPossibles.get(i).getNom() + " Pouvoir associé : " +
                         choixPossibles.get(i).getPouvoirAssocie());
+
+            if ( sc.hasNextInt() )
+                choix = sc.nextInt();
+            else
+            {
+                System.out.println("Veuillez entrer un choix valide ! ");
+                sc.next();
             }
-            choix = sc.nextInt();
         }
 
-        int indexSacre = choix-1;
+        int indexSacre = choix - 1;
         CarteAnimal carteSacrifiee = choixPossibles.get(indexSacre);
         TypePouvoir pouvoirFutur = carteSacrifiee.getPouvoirAssocie();
 
-        System.out.println(carteSacrifiee.getNom()+" a été sacrifié !");
+        System.out.println(carteSacrifiee.getNom() +" a été sacrifié !");
 
         carteSacrifiee.tuer();
         m_plateau.retirerCarteA(positionsPossibles.get(indexSacre));
 
-        System.out.println("Quelle carte détiendra le pouvoir "+pouvoirFutur.name()+ " ?");
+        System.out.println("Quelle carte détiendra le pouvoir " +pouvoirFutur.name() +" ?");
 
         int choixCarteMain = 0;
 
         while ( choixCarteMain <= 0 || choixCarteMain > m_joueur.getMain().size() )
         {
-            for ( int i = 0; i < m_joueur.getMain().size(); i ++ )
+            for ( int i = 0; i < m_joueur.getMain().size(); i++ )
+                System.out.println("[" +(i + 1) + "] " +m_joueur.getMain().get(i).getNom());
+
+            if ( sc.hasNextInt() )
+                choixCarteMain = sc.nextInt();
+            else
             {
-                System.out.println("["+(i+1)+"] "+m_joueur.getMain().get(i).getNom());
+                System.out.println("Veuillez entrer un choix valide ! ");
+                sc.next();
             }
-            choixCarteMain = sc.nextInt();
         }
 
-        int indexMain = choixCarteMain-1;
-
-        m_joueur.getCarteMain(indexMain).activerPouvoir(pouvoirFutur);
-        System.out.println(m_joueur.getCarteMain(indexMain).getNom() + " a obtenu le pouvoir "+
-                pouvoirFutur.name()+ " !");
+        m_joueur.getCarteMain(choixCarteMain-1).activerPouvoir(pouvoirFutur);
+        System.out.println(m_joueur.getCarteMain(choixCarteMain-1).getNom() +" a obtenu le pouvoir " +
+                pouvoirFutur.name() + " !");
 
         System.out.println("=============FIN- Pierre de Sacrifice=============");
     }
 
+    private void proposerUneCarte(int parmiNombre)
+    {
+        System.out.println("=========== Proposition de Carte =================");
+        System.out.println("Choisissez l'une de ces cartes : ");
+
+        CarteAnimal[] options = new CarteAnimal[parmiNombre];
+        for ( int i = 0; i < parmiNombre; i++ )
+            options[i] = CarteFactory.creerCarteAnimalRandom();
+
+        int choix = 0;
+        Scanner sc = new Scanner(System.in);
+
+        while ( choix < 1 || choix > parmiNombre )
+        {
+            for ( int i = 0; i < parmiNombre; i++ )
+                System.out.println("[" + (i + 1) + "] " + options[i].getNom());
+
+            System.out.print("Entrez le numéro de votre choix : ");
+
+            if ( sc.hasNextInt() )
+                choix = sc.nextInt();
+            else
+            {
+                System.out.println("Veuillez entrer un choix valide ! ");
+                sc.next();
+            }
+        }
+
+        CarteAnimal carteChoisie = options[choix-1];
+        System.out.println("Vous obtenez : " +carteChoisie.getNom() +" !");
+        m_joueur.ajouterCarteMain(carteChoisie);
+
+        System.out.println("==============Fin Proposition Carte====================");
+    }
 }

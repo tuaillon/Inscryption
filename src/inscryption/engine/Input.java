@@ -85,6 +85,12 @@ public class Input
                     return false;
                 }
 
+                if ( pos.name().startsWith("A") )
+                {
+                    System.out.println("Vous ne pouvez pas placer de carte chez l'adversaire ! ");
+                    return false;
+                }
+
                 CarteAnimal carte = j.getCarteMain(numCarte - 1);
                 j.placerCarte(carte, p, pos);
                 return true;

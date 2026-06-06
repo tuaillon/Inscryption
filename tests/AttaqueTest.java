@@ -1,6 +1,7 @@
 import inscryption.carte.CarteAnimal;
 import inscryption.carte.CarteFactory;
 import inscryption.carte.TypeAnimal;
+import inscryption.carte.TypePouvoir;
 import org.junit.Test;
 
 import java.util.Optional;
@@ -26,6 +27,7 @@ public class AttaqueTest
     {
         CarteAnimal vipere = CarteFactory.creerCarteAnimal(TypeAnimal.VIPERE);
         CarteAnimal grizzly = CarteFactory.creerCarteAnimal(TypeAnimal.GRIZZLY);
+        vipere.activerPouvoir(TypePouvoir.CONTACT_MORTEL);
         vipere.attaquer(Optional.of(grizzly));
         assertTrue(grizzly.estMort());
     }

@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-public final class InputTest
+public class InputTest
 {
     @Test
     public void testInput1() throws Exception {
@@ -56,7 +56,7 @@ public final class InputTest
     public void testInput5() throws Exception {
         Joueur j = new Joueur();
         Plateau p = new Plateau();
-        Input inp = new Input("placer 1 A1");
+        Input inp = new Input("placer 1 A1"); // placer chez ladversaire
         Game g = new Game();
 
         assertFalse(inp.tryExecuteInput(j, p,g));

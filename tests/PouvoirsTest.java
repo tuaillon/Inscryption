@@ -44,6 +44,7 @@ public class PouvoirsTest
         CarteAnimal coureur = CarteFactory.creerCarteAnimal(TypeAnimal.ELAN);
         coureur.activerPouvoir(TypePouvoir.COUREUR);
 
+        g.getPlateau().reinitialiser(); // enlever les obstacles
         g.getPlateau().positionnerCarte(coureur, Position.B2);
         g.executerPouvoirCoureur();
         assertTrue(g.getPlateau().getPlateau().get(Position.B3).isPresent());

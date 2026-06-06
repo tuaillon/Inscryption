@@ -23,6 +23,7 @@ public abstract class Entite
             piocher();
     }
 
+    public void ajouterCarteMain(CarteAnimal c) { m_main.add(c); }
     public void piocher() { m_main.add(m_pioche.piocher()); };
     public int getScore() { return m_score; }
     public void modifierScore(int valeur) { m_score += valeur; }
