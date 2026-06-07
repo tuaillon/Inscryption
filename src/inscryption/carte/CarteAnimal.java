@@ -109,8 +109,6 @@ public class CarteAnimal extends Carte
         return this.m_attk;
     }
 
-    public void modifierPv(int valeur) { m_pv = valeur; }
-
     public int getOs()
     {
         return m_os;

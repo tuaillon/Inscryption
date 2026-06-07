@@ -23,6 +23,9 @@ public abstract class Entite
             piocher();
     }
 
+    public int getNbCarteMain(){ return m_main.size(); }
+    public CarteAnimal getCarteMain(int index) { return m_main.get(index); }
+    public void retirerCarteMain(CarteAnimal c) { m_main.remove(c); }
     public void ajouterCarteMain(CarteAnimal c) { m_main.add(c); }
     public void piocher() { m_main.add(m_pioche.piocher()); };
     public int getScore() { return m_score; }
@@ -31,16 +34,19 @@ public abstract class Entite
     public int getNbOsTotal() { return m_nbOsTotal; }
     public int getNbGouttesDeSang() { return m_nbGouttesDeSangTotal; }
     public List<CarteAnimal> getMain() { return m_main; }
+    public void afficherMain()
+    {
+        System.out.println("\nVotre main : ");
+        for ( int i = 0; i < m_main.size(); i++ )
+            System.out.println(i+1+ ". "+m_main.get(i).getToutesInfosCarte());
+        m_pioche.afficherPioche();
+    }
 
     public Entite()
     {
         m_score = 0;
         m_nbGouttesDeSangTotal = 0;
         m_nbOsTotal = 0;
-    }
-
-    public void afficherScore(){
-        System.out.println("Score : " + this.m_score + "\n");
     }
 
     public void resetStats()

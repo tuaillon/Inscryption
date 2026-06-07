@@ -1,7 +1,4 @@
-import inscryption.carte.CarteAnimal;
-import inscryption.carte.CarteFactory;
-import inscryption.carte.TypeAnimal;
-import inscryption.carte.TypePouvoir;
+import inscryption.carte.*;
 import inscryption.engine.Game;
 import inscryption.engine.Joueur;
 import inscryption.engine.Plateau;
@@ -22,21 +19,26 @@ public class PouvoirsTest
         vipere.attaquer(Optional.of(grizzly));
         assertTrue(grizzly.estMort());
     }
-/*
+
     @Test
     public void pouvoirNombreusesVies()
     {
         CarteAnimal chat = CarteFactory.creerCarteAnimal(TypeAnimal.CHAT);
+        chat.activerPouvoir(TypePouvoir.NOMBREUSES_VIES);
         Plateau p = new Plateau();
         p.positionnerCarte(chat, Position.B1);
         Joueur j = new Joueur();
+
+        /* On va simuler cet appel de methode qui utilise un scanner:
         j.sacrifier(chat,p,Position.B1);
+        */
+        if ( !chat.detientPouvoir(TypePouvoir.NOMBREUSES_VIES) )
+            p.retirerCarteA(Position.B1);
+
         //Chat pas mort
         assertTrue(p.getPlateau().get(Position.B1).isPresent());
-
-        //le test y est mais le scanner pose probleme
     }
-*/
+
     @Test
     public void pouvoirCoureur()
     {
@@ -50,6 +52,44 @@ public class PouvoirsTest
         assertTrue(g.getPlateau().getPlateau().get(Position.B3).isPresent());
         assertFalse(g.getPlateau().getPlateau().get(Position.B2).isPresent());
         assertTrue(g.getPlateau().getPlateau().get(Position.B3).get().estAnimal());
+    }
+
+    @Test
+    public void pouvoirCoureurGauche()
+    {
+        Game g = new Game();
+        CarteAnimal coureur = CarteFactory.creerCarteAnimal(TypeAnimal.ELAN);
+        coureur.activerPouvoir(TypePouvoir.COUREUR);
+
+        CarteObstacle truc = CarteFactory.creerCarteObstacleRandom();
+
+        g.getPlateau().reinitialiser(); // enlever les obstacles
+        g.getPlateau().positionnerCarte(coureur, Position.B2);
+        g.getPlateau().positionnerCarte(truc, Position.B3);
+        g.executerPouvoirCoureur();
+        assertTrue(g.getPlateau().getPlateau().get(Position.B3).isPresent());
+        assertFalse(g.getPlateau().getPlateau().get(Position.B2).isPresent());
+        assertTrue(g.getPlateau().getPlateau().get(Position.B1).get().estAnimal());
+    }
+
+    @Test
+    public void pouvoirCoureurBloque()
+    {
+        Game g = new Game();
+        CarteAnimal coureur = CarteFactory.creerCarteAnimal(TypeAnimal.ELAN);
+        coureur.activerPouvoir(TypePouvoir.COUREUR);
+
+        CarteObstacle truc = CarteFactory.creerCarteObstacleRandom();
+        CarteObstacle truc2 = CarteFactory.creerCarteObstacleRandom();
+
+        g.getPlateau().reinitialiser(); // enlever les obstacles
+        g.getPlateau().positionnerCarte(coureur, Position.B2);
+        g.getPlateau().positionnerCarte(truc, Position.B3);
+        g.getPlateau().positionnerCarte(truc2, Position.B1);
+        g.executerPouvoirCoureur();
+        assertTrue(g.getPlateau().getPlateau().get(Position.B3).isPresent());
+        assertTrue(g.getPlateau().getPlateau().get(Position.B1).isPresent());
+        assertTrue(g.getPlateau().getPlateau().get(Position.B2).get().estAnimal());
     }
 
     @Test

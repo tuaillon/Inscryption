@@ -14,5 +14,13 @@ public class InitialisationPartieTest
     {
         Game g = new Game();
 
+        assertEquals(0,g.getJoueur().getNbGouttesDeSang());
+        assertEquals(0,g.getAdversaire().getNbGouttesDeSang());
+
+        assertEquals(0,g.getJoueur().getNbOsTotal());
+        assertEquals(0,g.getAdversaire().getNbOsTotal());
+
+        assertEquals(4,g.getJoueur().getNbCarteMain());
+        assertEquals(4,g.getAdversaire().getNbCarteMain());
     }
 }

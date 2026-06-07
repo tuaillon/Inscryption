@@ -184,11 +184,11 @@ public class Plateau
         {
             if ( ligne[i].isPresent() && ligne[i].get().estAnimal() )
             {
-                // Afficher les pouvoirs de la carte
+                // Afficher uniquement le pouvoir originel de la carte ( peut ne pas etre actif)
                 String pouvoirCarte = "";
                 for (TypePouvoir pv : TypePouvoir.values())
                 {
-                    if (ligne[i].get().detientPouvoir(pv))
+                    if (ligne[i].get().detientPouvoirOriginel(pv))
                     {
                         if (pv.name().length() > maxCharLigne)
                         {
