@@ -41,7 +41,7 @@ public final class Game
 
             preparerJeu(); //bah oui c'est quand même mieux de reset le score
 
-            if ( partie == 2 )
+            if ( partie == 3 )
             {
                 proposerUneCarte(2);
                 executerPierreDeSacrifice();
@@ -101,6 +101,7 @@ public final class Game
                 System.out.println("#-----------------------------");
                 tour++;
                 m_finTour = false;
+                m_adversaire.mettreAJourStats();
 
                 if ( m_joueur.getScore() - m_adversaire.getScore() >=
                     NB_DE_POINTS_POUR_GAGNER_PARTIE )
@@ -179,6 +180,8 @@ public final class Game
                 // bcp de get :(
                 if ( m_plateau.getPlateau().get(pos).get().estMort()  )
                 {
+                    System.out.println(m_plateau.getPlateau().get(pos).get().getNom()+" a " +
+                            "périt !");
                     m_plateau.getPlateau().put(pos, Optional.empty());
 
                     if ( !m_plateau.estEnnemi(pos) )//si la carte morte est nous

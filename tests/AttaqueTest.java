@@ -18,6 +18,7 @@ public class AttaqueTest
         int pointsGagnes = volant.attaquer(Optional.of(carteATester));
 
         assertEquals(2, pointsGagnes);
+        assertEquals(1, carteATester.getPv());
         assertFalse(carteATester.estMort());
 
     }

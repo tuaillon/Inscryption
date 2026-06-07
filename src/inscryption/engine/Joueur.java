@@ -18,25 +18,6 @@ public class Joueur extends Entite
         }
     }
 
-    public int getNbCarteMain(){ return m_main.size(); }
-    public CarteAnimal getCarteMain(int index) { return m_main.get(index); }
-
-    public void retirerCarteMain(CarteAnimal c) {
-        m_main.remove(c);
-    }
-
-    public void afficherMain()
-    {
-        System.out.println("\nVotre main : ");
-        for ( int i = 0; i < m_main.size(); i++ )
-        {
-
-            System.out.println(i+1+ ". "+m_main.get(i).getToutesInfosCarte());
-
-        }
-        m_pioche.afficherPioche();
-    }
-
     public void piocher()
     {
         m_main.add(m_pioche.piocher());

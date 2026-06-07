@@ -25,6 +25,7 @@ public abstract class Carte
     {
         return m_pouvoirsActifs.contains(pv);
     }
+    public boolean detientPouvoirOriginel(TypePouvoir pv) {return m_pouvoir.equals(pv); }
 
     public void activerPouvoir(TypePouvoir pv)
     { if ( !m_pouvoirsActifs.contains(pv) )
