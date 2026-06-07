@@ -106,6 +106,8 @@ public class CarteAnimal extends Carte
 
         }
         //cas où y a pas de carte en face
+        System.out.println(m_nom + " attaque le score de "
+                + m_attk + " !");
         return this.m_attk;
     }
 
