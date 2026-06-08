@@ -77,6 +77,7 @@ public class Joueur extends Entite
         boolean sacrifier = true;
         int nbCartes = 0;
 
+        HashMap<Position, Carte> cartesSacrifiables = new HashMap<>();
         List<Carte> listeCartesSacrifiables = new ArrayList<>();
         List<Position> listesPositionCartesSacrifiables = new ArrayList<>();
 
@@ -89,8 +90,12 @@ public class Joueur extends Entite
                 if (entry.getValue().isPresent() && entry.getValue().get().estAnimal()) {
                     // Ajouter la carte à la liste
                     listeCartesSacrifiables.add(entry.getValue().get());
+                    System.out.println(entry.getValue().get());
                     // Ajouter la position corrspondante
                     listesPositionCartesSacrifiables.add(entry.getKey());
+                    System.out.println(entry.getKey());
+
+                    cartesSacrifiables.put(entry.getKey(), entry.getValue().get());
                     nbCartes++;
                 }
             }
@@ -112,19 +117,30 @@ public class Joueur extends Entite
                 System.out.println("\nQuelle(s) carte(s) voulez-vous sacrifier ?\n");
                 // Affichage final des cartes que l'on peut sacrifier
                 int j = 1;
+                /*
+                for(Map.Entry<Position, Carte> entry : cartesSacrifiables.entrySet())
+                {
+                    texteInfosCartes += "[" + j + "] " + entry.getValue().getToutesInfosCarte() + "\n";
+                    j++;
+                }
+                */
+
+
                 for(Carte carte : listeCartesSacrifiables){
                     texteInfosCartes += "[" + j + "] " + carte.getToutesInfosCarte() + "\n";
                     j++;
                 }
-                System.out.println("Indiquez votre choix : " + texteInfosCartes);
 
+
+
+                System.out.println("Indiquez votre choix : " + texteInfosCartes);
                 // Scanner
                 Scanner sc = new Scanner(System.in);
                 String choix = sc.nextLine();
 
 
                 // on parcourt les cartes sacrifiables pour les afficher et que le joueur choisisse quelle(s) carte(s) il souhaite sacrifier
-                for(int i = 0; i < listeCartesSacrifiables.size(); i++)
+                for(int i = 0; i < cartesSacrifiables.size(); i++)
                 {
                     if (Integer.parseInt(choix) <= listeCartesSacrifiables.size())
                     {
@@ -134,10 +150,13 @@ public class Joueur extends Entite
 
                         // Enlève la carte dans la liste à sacrifier
                         int emplacement = Integer.parseInt(choix) - 1;
+                        //System.out.println(listesPositionCartesSacrifiables.get(emplacement));
+                        //System.out.println(emplacement);
 
                         //on l'enleve si il a pas le pouvoir
                         if ( !listeCartesSacrifiables.get(emplacement).
                                 detientPouvoir(TypePouvoir.NOMBREUSES_VIES) )
+
                             p.retirerCarteA(listesPositionCartesSacrifiables.get(emplacement));
                         //System.out.println(listesPositionCartesSacrifiables.get(emplacement));
 
@@ -148,9 +167,9 @@ public class Joueur extends Entite
                 // On vérifie si les conditions sont remplies pour le sacrifice
                 // Si le nombre de gouttes de sang est suffisant
 
-                if (c.getGouttesDeSang() <= m_nbGouttesDeSangTotal || listeCartesSacrifiables.isEmpty())
+                if (c.getGouttesDeSang() <= m_nbGouttesDeSangTotal || cartesSacrifiables.isEmpty())
                 {
-                    p.changerCarte(pos, c);
+                    p.positionnerCarte(c, pos);
                     retirerCarteMain(c);
                     sacrifier = false;
 
