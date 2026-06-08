@@ -33,6 +33,8 @@ package inscryption
             +executerTourAdversaire()
             +preparerJeu()
             +executerPouvoirCoureur()
+            +executerPierreDeSacrifice()
+            +proposerUneCarte(parmiNombre : Integer)
         }
 
         class Joueur
@@ -65,7 +67,6 @@ package inscryption
             +piocher() : CarteAnimal
             +nbCartePioche() : Integer
             +regenererPiocheAleatoire()
-            +regenererPiocheDebutEcureuil()
             +viderPioche()
             +afficherPioche()
         }
@@ -108,7 +109,6 @@ package inscryption
             +executerMeilleur(p: Plateau)
             +mettreAJourStats()
             +reinitialiserProchain()
-            +afficherProchain()
         }
 
         class Entite
@@ -139,11 +139,6 @@ package inscryption
             +<<create>> Input(input: String)
             +changerInput(newInput: String)
             +tryExecuteInput(j: Joueur, p: Plateau) : Boolean
-        }
-
-        class Renderer
-        {
-            +{static}afficherInfosTour(p: Plateau) : String
         }
 
         enum InputsPossibles
@@ -186,13 +181,16 @@ package inscryption
             +getNbMaxCaractere() : Integer
             +nbEspaceMots(carte: Carte) : String
             +detientPouvoir(pv: TypePouvoir)
+            +detientPouvoirOriginel(pv : TypePouvoir) : Boolean
+            +activerPouvoir(pv : TypePouvoir)
+            +getPouvoirAssocie() : TypePouvoir
             +estAnimal() : Boolean
             +estObstacle() : Boolean
         }
 
         class CarteObstacle
         {
-           +<<create>> CarteObstacle(String nom, Integer pv)
+           +<<create>> CarteObstacle(nom : String, pv : Integer)
            +attaquer(carteAdverse: Optional<Carte>) : Integer
            +getInfos() : String
            +getToutesInfosCarte() : String
@@ -205,7 +203,8 @@ package inscryption
             #m_gouttesDeSang : Integer
             #m_os : Integer
             #m_bVolant : Boolean
-            +<<create>> CarteAnimal(String nom, Integer pv, Integer attk, Integer gouttes, Integer os, Boolean bVolant)
+            +<<create>> CarteAnimal(nom : String, pv : Integer, attk : Integer, gouttes : Integer, os : Integer, volant : Boolean)
+            +<<create>> CarteAnimal(nom : String, pv : Integer, attk : Integer, gouttes : Integer, os : Integer, volant : Boolean, pouv : TypePouvoir)
             +attaquer(carteAdverse: Optional<Carte>) : Integer
             +modifierPv(valeur : Integer)
             +getOs() : Integer
@@ -258,6 +257,8 @@ package inscryption
             COUREUR,
             CONTACT_MORTEL,
             PIQUES_POINTUES
+
+            AUCUN
         }
 
     }
