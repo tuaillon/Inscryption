@@ -1,3 +1,26 @@
+# Fonctionnalités implémentées
+
+## Tests fonctionnels
+
+- [x] l'attaque d'une carte,
+- [ ] l'attaque des toutes les cartes à la fin d'un tour,
+- [x] les pouvoirs,
+- [x] le mécanisme de la pierre de sacrifice,
+- [x] la mise à jour du score,
+- [x] le placement des cartes sur le plateau
+- [x] le fait de piocher une carte,
+- [ ] la mise en place d'une partie (plateau et pioches)
+- [x] le fait de gagner ou perdre une partie
+- [x] l'ajout de nouvelles cartes dans la pioche à la fin de la deuxième partie
+- [x] le fait de gagner ou perdre le jeu
+
+Etant donné que certaines méthodes de notre code utilisent des scanner pour enregistrer l'input du joueur, nous ne pouvions pas simplement les implémenter dans les tests sans ajustements.
+
+Ainsi, pour les tests de gagner ou de perdre une partie ou le jeu, ou encore pour ceux liés à la pierre de sacrifice, nous avons dû réaliser ces fonctionnalités manuellement. Elle risquent ainsi de ne pas être entièrement identiques à leur exécution dans une vrai partie, mais nous avons fait au mieux pour s'en rapprocher le plus possible.
+
+N'hésitez pas à jeter un oeil au code lié à ces différentes parties pour vous faire une idée de nos implémentation dans le code.
+
+---
 # Inscryption
 
 On souhaite développer une application imitant **le jeu Inscryption**.
