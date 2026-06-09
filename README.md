@@ -3,7 +3,7 @@
 ## Tests fonctionnels
 
 - [x] l'attaque d'une carte,
-- [ ] l'attaque des toutes les cartes à la fin d'un tour,
+- [x] l'attaque des toutes les cartes à la fin d'un tour,
 - [x] les pouvoirs,
 - [x] le mécanisme de la pierre de sacrifice,
 - [x] la mise à jour du score,
@@ -18,9 +18,14 @@ Etant donné que certaines méthodes de notre code utilisent des scanner pour en
 
 Ainsi, pour les tests de gagner ou de perdre une partie, ou encore pour ceux liés à la pierre de sacrifice, nous avons dû réaliser ces fonctionnalités manuellement. Elle risquent ainsi de ne pas être entièrement identiques à leur exécution dans une vrai partie, mais nous avons fait au mieux pour s'en rapprocher le plus possible.
 
-En revanche, le test nécessitant de gagner ou perdre le jeu nécessite de simuler entièrement un jeu d'Inscryption, ce qui serait trop compliqué et long à faire, étant donné que nous utilisons des scanner pour recevoir les entrées du joueur. Nous avons donc décidé ne pas faire ce test. Cependant, nous avons essayé de faire tous les autres comme vous pourrez le remarquer, notamment la simulatoin d'un tour complet, ce qui était une alternative proposée au cas où nous ne parviendrons justement pas de compléter ces tests de simulation complète du jeu. 
+En revanche, le test nécessitant de gagner ou perdre le jeu nécessite de simuler entièrement un jeu d'Inscryption, ce qui serait trop compliqué et long à faire, étant donné que nous utilisons des scanner pour recevoir les entrées du joueur. Nous avons donc décidé ne pas faire ce test. 
+
+Cependant, nous avons essayé de faire tous les autres comme vous pourrez le remarquer, notamment la simulatoin d'un tour complet, ce qui était une alternative proposée au cas où nous ne parviendrons justement pas de compléter ces tests de simulation complète du jeu. 
 
 N'hésitez pas à jeter un oeil au code lié à ces différentes parties pour vous faire une idée de nos implémentation dans le code.
+
+
+Ainsi, toutes les mécaniques demandées ont été implémentées dans notre application.
 
 ---
 # Inscryption
