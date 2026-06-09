@@ -31,6 +31,20 @@ public class PiocheTest
         assertEquals(6, j.getNbCarteMain());
     }
 
+    @Test
+    public void piocheVideTest()
+    {
+        Joueur j = new Joueur();
+        j.getMain().clear();
+        j.getPioche().viderPioche();
+
+        //la pioche est vide, si on essaye de piocher
+        // la pioche renvoie un ecureuil pour rester dans l'esprit
+        // du jeu original avec les deux pioches
+        j.piocher();
+        assertTrue(j.getCarteMain(0).getNom().equals("Ecureuil") );
+    }
+
 
 
 
