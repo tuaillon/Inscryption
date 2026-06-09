@@ -34,6 +34,7 @@ public abstract class Entite
     public int getNbOsTotal() { return m_nbOsTotal; }
     public int getNbGouttesDeSang() { return m_nbGouttesDeSangTotal; }
     public List<CarteAnimal> getMain() { return m_main; }
+    public Pioche getPioche() { return m_pioche; }
     public void afficherMain()
     {
         System.out.println("\nVotre main : ");

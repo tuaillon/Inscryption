@@ -1,7 +1,4 @@
-import inscryption.carte.CarteAnimal;
-import inscryption.carte.CarteFactory;
-import inscryption.carte.TypeAnimal;
-import inscryption.carte.TypePouvoir;
+import inscryption.carte.*;
 import org.junit.Test;
 
 import java.util.Optional;
@@ -44,6 +41,41 @@ public class AttaqueTest
 
         assertEquals(3, grizzly.getPv());
         assertTrue(loup.estMort());
+
+    }
+
+    @Test
+    public void attkNormale2()
+    {
+        CarteAnimal loup = CarteFactory.creerCarteAnimal(TypeAnimal.LOUP);
+        CarteAnimal elan = CarteFactory.creerCarteAnimal(TypeAnimal.ELAN);
+
+        loup.attaquer(Optional.of(elan));
+        elan.attaquer(Optional.of(loup));
+
+        assertEquals(1, elan.getPv());
+        assertEquals(0, loup.getPv());
+        assertTrue(loup.estMort());
+    }
+
+    @Test
+    public void attkObstacle()
+    {
+        CarteObstacle rocher = CarteFactory.creerCarteObstacle(TypeObstacle.ROCHER);
+
+        CarteAnimal elan = CarteFactory.creerCarteAnimal(TypeAnimal.ELAN);
+
+        //la methode attaquer() pour obstacle est override et renvoie 0
+        int pvOriginelElan = elan.getPv();
+
+        rocher.attaquer(Optional.of(elan));
+
+        assertEquals(pvOriginelElan, elan.getPv());
+
+        elan.attaquer(Optional.of(rocher));
+
+        assertEquals(3, rocher.getPv());
+
 
     }
 }
