@@ -4,7 +4,7 @@ skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 skinparam style strictuml
 hide empty members
-
+top to bottom direction
 package inscryption
 {
     package engine
@@ -141,14 +141,14 @@ package inscryption
             +tryExecuteInput(j: Joueur, p: Plateau) : Boolean
         }
 
-        enum InputsPossibles
+        enum InputsPossibles <<enumerate>>
         {
             PLACER,
             FIN,
             PIOCHER
         }
 
-        enum Position
+        enum Position <<enumerate>>
         {
             A1,
             A2,
@@ -219,14 +219,14 @@ package inscryption
 
         class CarteFactory
         {
-            -<<create>>
+            -<<create>>CarteFactory()
             +{static}creerCarteAnimal(TypeAnimal) : CarteAnimal
             +{static}creerCarteObstacle(TypeObstacle) : CarteObstacle
             +{static}creerCarteAnimalRandom() : CarteAnimal
             +{static}creerCarteObstacleRandom() : CarteObstacle
         }
 
-        enum TypeAnimal
+        enum TypeAnimal <<enumerate>>
         {
             CHAT,
             GRIZZLY,
@@ -243,13 +243,13 @@ package inscryption
             PORC_EPIC
         }
 
-        enum TypeObstacle
+        enum TypeObstacle <<enumerate>>
         {
             ROCHER,
             SAPIN
         }
 
-        enum TypePouvoir
+        enum TypePouvoir <<enumerate>>
         {
             NOMBREUSES_VIES,
             CROISSANCE,
@@ -271,6 +271,8 @@ class Main
     +main(String[])
 }
 
+engine ---[hidden]down-> carte
+
 CarteFactory .> TypeAnimal : <<uses>>
 CarteFactory .> TypeObstacle : <<uses>>
 CarteFactory .> TypePouvoir : <<uses>>
@@ -281,7 +283,7 @@ Carte .> TypePouvoir : <<uses>>
 CarteAnimal --|> Carte : <<extends>>
 CarteObstacle --|> Carte : <<extends>>
 
-Pioche .> CarteFactory : <<uses>>
+Pioche "1"*-->"*\n" CarteFactory : <<belongs to>>
 Joueur --|> Entite : <<extends>>
 Adversaire --|> Entite : <<extends>>
 Game .> Joueur : <<uses>>
@@ -289,9 +291,9 @@ Game .> Plateau : <<uses>>
 Game .> Input : <<uses>>
 Input .> InputsPossibles : <<uses>>
 Joueur .> CarteAnimal : <<has>>
-Joueur .> Pioche : <<has>>
+Pioche "1" o--> "2..*\n-m_pioche" Joueur : <<is used by>>
 Plateau .> Carte : <<has>>
 Plateau .> Position : <<uses>>
-Main .> Game : <<uses>>
+Main -up.> Game : <<calls>>
 
 @enduml
