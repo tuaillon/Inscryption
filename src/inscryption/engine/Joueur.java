@@ -18,11 +18,6 @@ public class Joueur extends Entite
         }
     }
 
-    public void piocher()
-    {
-        m_main.add(m_pioche.piocher());
-    }
-
     public void placerCarte(CarteAnimal c, Plateau p, Position pos) throws Exception
     {
         if ( !peutPlacerCarte(c, p, pos) )

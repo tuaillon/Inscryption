@@ -121,11 +121,6 @@ public class CarteAnimal extends Carte
         return m_gouttesDeSang;
     }
 
-    public int getAtt()
-    {
-        return m_attk;
-    }
-
     public void impacterAtt(int valeur) { m_attk += valeur; }
 
     @Override
