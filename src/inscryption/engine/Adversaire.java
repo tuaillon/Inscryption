@@ -47,11 +47,22 @@ public class Adversaire extends Entite
         Position[] ligneB = {Position.B1, Position.B2,
                 Position.B3, Position.B4};
 
-        for ( int i = 0; i < m_prochaineAction.length; i++ ) {
+        for ( int i = 0; i < m_prochaineAction.length; i++ )
+        {
             if ( m_prochaineAction[i].isEmpty() && !m_main.isEmpty() )
             {
-                CarteAnimal carte = m_main.remove(0);
-                m_prochaineAction[i] = Optional.of(carte);
+                for ( int j = 0; j < m_main.size(); j++ )
+                {
+                    CarteAnimal carte = m_main.get(j);
+                    if ( m_nbGouttesDeSangTotal >= carte.getGouttesDeSang() &&
+                            m_nbOsTotal >= carte.getOs() )
+                    {
+                        m_prochaineAction[i] = Optional.of(carte);
+                        m_main.remove(j);
+
+                        break;
+                    }
+                }
             }
         }
 
