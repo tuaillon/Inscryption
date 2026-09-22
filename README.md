@@ -17,6 +17,9 @@ Une partie se termine lorsque l'ecart de score entre le joueur et l'adversaire a
 Le plateau contient deux rangees de quatre emplacements. Le joueur pose ses cartes sur la rangee du bas ; l'adversaire occupe la rangee du haut.
 La balance situee a gauche represente l'ecart de score actuel.
 
+![Board](screenshots/main.png)
+
+
 ### Deroulement d'un tour
 
 1. L'adversaire revele les cartes qu'il compte jouer au tour suivant.
